@@ -16,10 +16,10 @@ fun TaskListScreen(
   ) {
     TaskList(
       listOf(
-        Task("Replace the water filter", 30, CycleType.DAYS),
-        Task("Clean the dishwasher", 6, CycleType.MONTHS),
-        Task("Clean the washing machine", 6, CycleType.MONTHS),
-        Task("Check tire pressure", 1, CycleType.YEARS)
+        Task("Replace the water filter", 30, CycleType.DAYS, viewModel.getDueDays(0)),
+        Task("Clean the dishwasher", 6, CycleType.MONTHS, viewModel.getDueDays(1)),
+        Task("Clean the washing machine", 6, CycleType.MONTHS, viewModel.getDueDays(2)),
+        Task("Check tire pressure", 1, CycleType.YEARS, viewModel.getDueDays(3))
       )
     )
   }
