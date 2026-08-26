@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.tymwitko.toreplace.list.Interval
+import com.tymwitko.toreplace.list.Task
+import java.time.LocalDate
 
 @Entity(tableName = "chore")
 data class ChoreEntry(
@@ -17,13 +19,23 @@ data class ChoreEntry(
   val description: String,
 
   @ColumnInfo(name = "interval")
-  var intervalCode: String
+  var intervalCode: String,
+
+  @ColumnInfo(name = "start_date")
+  var startDate: String
 ) {
-  constructor(ps: ChoreData) : this(
-    name = ps.name,
-    description = ps.description,
-    intervalCode = ps.interval.toCode()
+  constructor(task: Task) : this(
+    name = task.name,
+    description = task.description,
+    intervalCode = task.interval.toCode(),
+    startDate = task.startDate.toString()
   )
 }
 
-fun ChoreEntry.toDomain() = ChoreData(name, description, Interval(intervalCode))
+fun ChoreEntry.toDomain() = Task(
+  id,
+  name,
+  description,
+  Interval(intervalCode),
+  LocalDate.parse(startDate)
+)

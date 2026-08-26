@@ -10,9 +10,9 @@ fun TaskList(tasks: List<Task>) {
     items(tasks, key = { it.name }) {
       TaskListItem(
         it.name,
-        it.cycleLength,
-        it.cycleTask,
-        it.dueInDays
+        it.interval.number,
+        it.interval.cycleType,
+        it.startDate.dayOfMonth
       )
     }
   }
