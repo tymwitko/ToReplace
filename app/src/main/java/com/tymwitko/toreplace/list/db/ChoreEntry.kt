@@ -1,4 +1,4 @@
-package com.tymwitko.toreplace.common.db
+package com.tymwitko.toreplace.list.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

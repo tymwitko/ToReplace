@@ -1,4 +1,4 @@
-package com.tymwitko.toreplace.list
+package com.tymwitko.toreplace.list.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -7,6 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.tymwitko.toreplace.list.CycleType
 
 @Composable
 fun TaskListItem(

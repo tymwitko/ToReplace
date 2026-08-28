@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.tymwitko.toreplace.list.db.ChoreEntry
 
 @Dao
 interface ReplaceDao {
@@ -14,8 +15,8 @@ interface ReplaceDao {
   suspend fun update(entry: ChoreEntry)
 
   @Query("SELECT * FROM chore WHERE id = :id")
-  suspend fun getFromWhitelistByPackageId(id: Long): ChoreEntry?
+  suspend fun getChoreById(id: Long): ChoreEntry?
 
   @Query("SELECT * FROM chore")
-  suspend fun getFullWhitelist(): List<ChoreEntry>
+  suspend fun getFullList(): List<ChoreEntry>
 }
