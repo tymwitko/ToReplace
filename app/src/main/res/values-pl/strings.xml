@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ToReplace</string>
+    <string name="error">Wystąpił błąd! Proszę o wklejenie poniższych logów w zgłoszeniu na GitHubie.</string>
+    <string name="retry">ODŚWIEŻ</string>
+    <string name="report_error">Zgłoś błąd</string>
+</resources>

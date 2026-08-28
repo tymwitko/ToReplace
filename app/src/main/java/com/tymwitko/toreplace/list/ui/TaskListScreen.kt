@@ -1,12 +1,17 @@
 package com.tymwitko.toreplace.list.ui
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tymwitko.toreplace.common.ui.ErrorScreen
 import com.tymwitko.toreplace.list.TaskListViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -15,6 +20,8 @@ fun TaskListScreen(
   viewModel: TaskListViewModel = koinViewModel()
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val clipBoardManager =
+    LocalContext.current.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
   Box(
     modifier = Modifier.statusBarsPadding().navigationBarsPadding()
   ) {
@@ -23,7 +30,11 @@ fun TaskListScreen(
         TaskList(state.list)
       }
       TaskListUiState.EmptyList -> {}
-      is TaskListUiState.Error -> {}
+      is TaskListUiState.Error -> {
+        ErrorScreen(state.message, viewModel::fetchTasks) {
+          clipBoardManager.setPrimaryClip(ClipData.newPlainText("", state.message))
+        }
+      }
       TaskListUiState.Loading -> {}
       TaskListUiState.MissingPermissions -> {}
     }

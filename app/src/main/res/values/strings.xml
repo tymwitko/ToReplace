@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ToReplace</string>
+    <string name="retry">RETRY</string>
+    <string name="report_error">Report bug</string>
+    <string name="error">The app encountered a problem! Please report an issue on GitHub and paste the below text.</string>
 </resources>
