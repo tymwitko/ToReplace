@@ -1,15 +1,32 @@
 package com.tymwitko.toreplace.common.koin
 
+import androidx.room.Room
 import com.tymwitko.toreplace.common.db.ReplaceDao
 import com.tymwitko.toreplace.common.db.ReplaceDatabase
+import com.tymwitko.toreplace.list.FetchTasksUseCase
 import com.tymwitko.toreplace.list.TaskListViewModel
-import org.koin.core.module.dsl.viewModelOf
+import com.tymwitko.toreplace.list.db.ChoreRepository
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-  viewModelOf(::TaskListViewModel)
+  viewModel {
+    TaskListViewModel(get())
+  }
+  single {
+    Room.databaseBuilder(
+      context = androidContext(),
+      klass = ReplaceDatabase::class.java,
+      name = "replace.db"
+    )
+      .build()
+  }
   single<ReplaceDao> {
     val db = get<ReplaceDatabase>()
     db.replaceDao()
   }
+  singleOf(::ChoreRepository)
+  singleOf(::FetchTasksUseCase)
 }
