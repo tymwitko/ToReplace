@@ -30,7 +30,7 @@ class TaskListViewModel(
         is Result.Success -> uiState.emit(TaskListUiState.Success(result.data))
         is Result.Failure -> {
           when (result.error) {
-            TaskListError.Empty -> uiState.emit(TaskListUiState.Error("List empty"))
+            TaskListError.Empty -> uiState.emit(TaskListUiState.EmptyList)
             is TaskListError.Exception ->
               uiState.emit(TaskListUiState.Error(result.error.message))
           }
