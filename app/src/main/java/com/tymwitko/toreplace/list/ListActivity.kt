@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.navigation.compose.rememberNavController
+import com.tymwitko.toreplace.common.NavHost
 import com.tymwitko.toreplace.common.ui.theme.ToReplaceTheme
-import com.tymwitko.toreplace.list.ui.TaskListScreen
 
 class ListActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +14,9 @@ class ListActivity : ComponentActivity() {
     enableEdgeToEdge()
     setContent {
       ToReplaceTheme {
-        TaskListScreen()
+        NavHost(
+          navController = rememberNavController()
+        )
       }
     }
   }
