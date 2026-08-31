@@ -46,7 +46,6 @@ fun TaskListScreen(
           PulseAnimation()
         }
       }
-      TaskListUiState.MissingPermissions -> {}
     }
   }
 }
