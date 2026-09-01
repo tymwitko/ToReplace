@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
-import com.tymwitko.toreplace.common.NavHost
+import com.tymwitko.toreplace.common.ReplaceNavHost
 import com.tymwitko.toreplace.common.ui.theme.ToReplaceTheme
 
 class ListActivity : ComponentActivity() {
@@ -14,7 +14,7 @@ class ListActivity : ComponentActivity() {
     enableEdgeToEdge()
     setContent {
       ToReplaceTheme {
-        NavHost(
+        ReplaceNavHost(
           navController = rememberNavController()
         )
       }

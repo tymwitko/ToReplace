@@ -4,4 +4,6 @@
     <string name="error">Wystąpił błąd! Proszę o wklejenie poniższych logów w zgłoszeniu na GitHubie.</string>
     <string name="retry">ODŚWIEŻ</string>
     <string name="report_error">Zgłoś błąd</string>
+    <string name="title">Tytuł</string>
+    <string name="description">Opis</string>
 </resources>

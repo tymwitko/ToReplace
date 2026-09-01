@@ -12,9 +12,10 @@ import androidx.navigation.compose.composable
 import com.tymwitko.toreplace.common.Consts.DONATION_URL
 import com.tymwitko.toreplace.common.Consts.REPORT_ISSUE_URL
 import com.tymwitko.toreplace.list.ui.TaskListScreen
+import com.tymwitko.toreplace.newtask.NewTaskScreen
 
 @Composable
-fun NavHost(
+fun ReplaceNavHost(
   modifier: Modifier = Modifier,
   navController: NavHostController,
   startDestination: String = NavigationItem.TaskList.route
@@ -31,10 +32,10 @@ fun NavHost(
     startDestination = startDestination
   ) {
     composable(NavigationItem.TaskList.route) {
-      TaskListScreen()
+      TaskListScreen(navController)
     }
     composable(NavigationItem.NewTask.route) {
-
+      NewTaskScreen()
     }
     composable(NavigationItem.Donate.route) {
       LaunchedEffect(Unit) {

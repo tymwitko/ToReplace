@@ -4,4 +4,6 @@
     <string name="error">¡La aplicación encontró un problema! Por favor, publique una issue sobre GitHub y pega el texto siguiente.</string>
     <string name="retry">REINTENTAR</string>
     <string name="report_error">Reportar el error</string>
+    <string name="title">Título</string>
+    <string name="description">Descripción</string>
 </resources>
