@@ -8,4 +8,8 @@
     <string name="description">Opis</string>
     <string name="start_date">Data rozpoczęcia</string>
     <string name="cancel">Anuluj</string>
+    <string name="days">Dni</string>
+    <string name="weeks">Tygodnie</string>
+    <string name="months">Miesiące</string>
+    <string name="years">Lata</string>
 </resources>

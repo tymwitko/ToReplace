@@ -6,6 +6,8 @@ import com.tymwitko.toreplace.common.db.ReplaceDatabase
 import com.tymwitko.toreplace.list.FetchTasksUseCase
 import com.tymwitko.toreplace.list.TaskListViewModel
 import com.tymwitko.toreplace.list.db.ChoreRepository
+import com.tymwitko.toreplace.newtask.NewTaskViewModel
+import com.tymwitko.toreplace.newtask.SubmitTaskUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
@@ -29,4 +31,8 @@ val appModule = module {
   }
   singleOf(::ChoreRepository)
   singleOf(::FetchTasksUseCase)
+  singleOf(::SubmitTaskUseCase)
+  viewModel {
+    NewTaskViewModel(get())
+  }
 }

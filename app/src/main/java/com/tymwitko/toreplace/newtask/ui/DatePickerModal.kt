@@ -2,16 +2,20 @@ package com.tymwitko.toreplace.newtask.ui
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.getSelectedDate
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.tymwitko.toreplace.R
+import java.time.LocalDate
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerModal(
-  onDateSelected: (Long?) -> Unit,
+  onDateSelected: (LocalDate?) -> Unit,
   onDismiss: () -> Unit
 ) {
   val datePickerState = rememberDatePickerState()
@@ -20,7 +24,7 @@ fun DatePickerModal(
     onDismissRequest = onDismiss,
     confirmButton = {
       TextButton(onClick = {
-        onDateSelected(datePickerState.selectedDateMillis)
+        onDateSelected(datePickerState.getSelectedDate())
         onDismiss()
       }) {
         Text(stringResource(R.string.ok))
