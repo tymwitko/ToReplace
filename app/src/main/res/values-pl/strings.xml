@@ -6,4 +6,6 @@
     <string name="report_error">Zgłoś błąd</string>
     <string name="title">Tytuł</string>
     <string name="description">Opis</string>
+    <string name="start_date">Data rozpoczęcia</string>
+    <string name="cancel">Anuluj</string>
 </resources>

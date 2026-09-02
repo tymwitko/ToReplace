@@ -1,4 +1,4 @@
-package com.tymwitko.toreplace.newtask
+package com.tymwitko.toreplace.newtask.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,11 +26,12 @@ fun NewTaskScreen() {
       .navigationBarsPadding()
       .statusBarsPadding()
       .fillMaxSize()
+      .padding(12.dp)
   ) {
     TextField(
       modifier = Modifier
         .fillMaxWidth()
-        .padding(12.dp)
+        .padding(vertical = 12.dp)
         .clearFocusOnKeyboardDismiss(),
       state = titleFieldState,
       placeholder = { Text(stringResource(R.string.title)) }
@@ -38,10 +39,12 @@ fun NewTaskScreen() {
     TextField(
       modifier = Modifier
         .fillMaxWidth()
-        .padding(12.dp)
+        .padding(vertical = 12.dp)
         .clearFocusOnKeyboardDismiss(),
       state = descriptionFieldState,
       placeholder = { Text(stringResource(R.string.description)) }
     )
+    DatePickerField()
   }
 }
+

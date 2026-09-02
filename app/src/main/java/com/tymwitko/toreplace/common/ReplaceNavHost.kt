@@ -12,7 +12,7 @@ import androidx.navigation.compose.composable
 import com.tymwitko.toreplace.common.Consts.DONATION_URL
 import com.tymwitko.toreplace.common.Consts.REPORT_ISSUE_URL
 import com.tymwitko.toreplace.list.ui.TaskListScreen
-import com.tymwitko.toreplace.newtask.NewTaskScreen
+import com.tymwitko.toreplace.newtask.ui.NewTaskScreen
 
 @Composable
 fun ReplaceNavHost(

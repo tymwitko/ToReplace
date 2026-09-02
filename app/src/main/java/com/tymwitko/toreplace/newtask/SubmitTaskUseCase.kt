@@ -9,6 +9,6 @@ class SubmitTaskUseCase(private val choreRepository: ChoreRepository) {
     task: Task
   ) {
     val entry = ChoreEntry(task)
-    choreRepository.addChore()
+    choreRepository.addChore(entry)
   }
 }
