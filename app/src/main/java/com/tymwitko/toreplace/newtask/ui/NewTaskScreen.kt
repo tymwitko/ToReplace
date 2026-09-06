@@ -15,7 +15,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -25,6 +27,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
@@ -105,7 +108,14 @@ fun NewTaskScreen(
         Button(
           onClick = {
             showDropdown = !showDropdown
-          }
+          },
+          shape = RectangleShape,
+          colors = ButtonColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground,
+            disabledContainerColor = MaterialTheme.colorScheme.background,
+            disabledContentColor = MaterialTheme.colorScheme.onBackground
+          )
         ) {
           Text(selectedCycleType?.name ?: "Select interval")
         }
@@ -131,6 +141,13 @@ fun NewTaskScreen(
         numberFieldState.text.isNotBlank() &&
         selectedDate != null &&
         selectedCycleType != null,
+      shape = RectangleShape,
+      colors = ButtonColors(
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+        disabledContainerColor = MaterialTheme.colorScheme.secondary,
+        disabledContentColor = MaterialTheme.colorScheme.onSecondary
+      ),
       onClick = {
         viewModel.submit(
           titleFieldState.text.toString(),
