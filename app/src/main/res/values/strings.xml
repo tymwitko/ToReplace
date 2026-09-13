@@ -3,4 +3,15 @@
     <string name="retry">RETRY</string>
     <string name="report_error">Report bug</string>
     <string name="error">The app encountered a problem! Please report an issue on GitHub and paste the below text.</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="start_date">Start date</string>
+    <string name="interval_number">Repeat every…</string>
+    <string name="add_task">Add new task</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="days">Days</string>
+    <string name="weeks">Weeks</string>
+    <string name="months">Months</string>
+    <string name="years">Years</string>
 </resources>

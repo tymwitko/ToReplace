@@ -20,7 +20,9 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.tymwitko.toreplace.R
+import com.tymwitko.toreplace.common.Screen
 import com.tymwitko.toreplace.common.ui.ErrorScreen
 import com.tymwitko.toreplace.common.ui.PulseAnimation
 import com.tymwitko.toreplace.common.ui.toImageBitmap
@@ -29,6 +31,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun TaskListScreen(
+  navController: NavHostController,
   viewModel: TaskListViewModel = koinViewModel()
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -64,7 +67,7 @@ fun TaskListScreen(
         .navigationBarsPadding()
         .align(Alignment.BottomEnd),
       onClick = {
-
+        navController.navigate(Screen.NEW_TASK.name)
       },
       content = {
         painterResource(R.drawable.add)
