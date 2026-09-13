@@ -6,6 +6,8 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="start_date">Start date</string>
+    <string name="interval_number">Repeat every…</string>
+    <string name="add_task">Add new task</string>
     <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
     <string name="days">Days</string>

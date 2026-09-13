@@ -12,4 +12,6 @@
     <string name="weeks">Tygodnie</string>
     <string name="months">Miesiące</string>
     <string name="years">Lata</string>
+    <string name="interval_number">Powtarzaj co…</string>
+    <string name="add_task">Dodaj nowe zadanie</string>
 </resources>

@@ -3,11 +3,15 @@ package com.tymwitko.toreplace.newtask.ui
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -26,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.PointerEventPass
@@ -56,29 +61,32 @@ fun NewTaskScreen(
       .navigationBarsPadding()
       .statusBarsPadding()
       .fillMaxSize()
-      .padding(12.dp)
+      .padding(12.dp),
+    verticalArrangement = Arrangement.spacedBy(12.dp)
   ) {
-    TextField(
+    Text(
       modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 12.dp)
-        .clearFocusOnKeyboardDismiss(),
-      state = titleFieldState,
-      placeholder = { Text(stringResource(R.string.title)) }
+        .fillMaxWidth(),
+      text = stringResource(R.string.add_task)
     )
     TextField(
       modifier = Modifier
         .fillMaxWidth()
-        .padding(vertical = 12.dp)
+        .clearFocusOnKeyboardDismiss(),
+      state = titleFieldState,
+      label = { Text(stringResource(R.string.title)) }
+    )
+    TextField(
+      modifier = Modifier
+        .fillMaxWidth()
         .clearFocusOnKeyboardDismiss(),
       state = descriptionFieldState,
-      placeholder = { Text(stringResource(R.string.description)) }
+      label = { Text(stringResource(R.string.description)) }
     )
     OutlinedTextField(
       value = selectedDate?.toString().orEmpty(),
       onValueChange = { },
       label = { Text(stringResource(R.string.start_date)) },
-      placeholder = { Text("DD/MM/YYYY") },
       modifier = Modifier
         .fillMaxWidth()
         .pointerInput(selectedDate) {
@@ -98,14 +106,28 @@ fun NewTaskScreen(
       )
     }
 
-    Row {
+    Row(
+      modifier = Modifier
+        .padding(vertical = 12.dp)
+        .height(IntrinsicSize.Max),
+      horizontalArrangement = Arrangement.spacedBy(12.dp),
+      verticalAlignment = Alignment.CenterVertically
+    ) {
       TextField(
+        modifier = Modifier
+          .weight(1f),
         state = numberFieldState,
+        label = { Text(stringResource(R.string.interval_number)) },
         inputTransformation = DigitOnlyInputTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
       )
-      Box {
+      Box(
+        modifier = Modifier
+          .weight(1f)
+          .fillMaxHeight()
+      ) {
         Button(
+          modifier = Modifier.fillMaxSize(),
           onClick = {
             showDropdown = !showDropdown
           },
@@ -117,7 +139,8 @@ fun NewTaskScreen(
             disabledContentColor = MaterialTheme.colorScheme.onBackground
           )
         ) {
-          Text(selectedCycleType?.name ?: "Select interval")
+          Text(
+            text = selectedCycleType?.name ?: "Select interval")
         }
         DropdownMenu(
           expanded = showDropdown,
