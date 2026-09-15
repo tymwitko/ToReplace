@@ -11,6 +11,7 @@ koinCore = "4.2.2"
 ksp = "2.3.6"
 roomCompiler = "2.8.4"
 navigationRuntimeAndroid = "2.9.8"
+material = "1.14.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -26,6 +27,7 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koinCore" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koinCore" }
 koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koinCore" }
