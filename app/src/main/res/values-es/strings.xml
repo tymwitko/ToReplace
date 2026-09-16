@@ -8,10 +8,6 @@
     <string name="description">Descripción</string>
     <string name="start_date">Fecha inicial</string>
     <string name="cancel">Anular</string>
-    <string name="days">Días</string>
-    <string name="weeks">Semanas</string>
-    <string name="months">Meses</string>
-    <string name="years">Años</string>
     <string name="interval_number">Repetir cada…</string>
     <string name="add_task">Añadir nuevo coro</string>
 </resources>

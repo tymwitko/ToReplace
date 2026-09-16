@@ -149,7 +149,10 @@ fun NewTaskScreen(
           }
         ) {
           CycleType.entries.forEach {
-            IntervalDropDownMenuItem(it) {
+            IntervalDropDownMenuItem(
+              runCatching { numberFieldState.text.toString().toInt() }.getOrDefault(1) ,
+              it
+            ) {
               selectedCycleType = it
               showDropdown = false
             }

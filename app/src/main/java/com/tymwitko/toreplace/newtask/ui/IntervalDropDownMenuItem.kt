@@ -7,13 +7,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
-import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.list.CycleType
+import com.tymwitko.toreplace.list.toStringResource
 
 @Composable
-fun IntervalDropDownMenuItem(cycleType: CycleType, onClick: () -> Unit) {
+fun IntervalDropDownMenuItem(cycleNumber: Int, cycleType: CycleType, onClick: () -> Unit) {
   Box(
     Modifier
       .fillMaxSize()
@@ -23,14 +23,7 @@ fun IntervalDropDownMenuItem(cycleType: CycleType, onClick: () -> Unit) {
       )
   ) {
     Text(
-      text = stringResource(
-        when (cycleType) { // todo: proper plurals
-          CycleType.DAYS -> R.string.days
-          CycleType.WEEKS -> R.string.weeks
-          CycleType.MONTHS -> R.string.months
-          CycleType.YEARS -> R.string.years
-        }
-      )
+      text = pluralStringResource(cycleType.toStringResource(), cycleNumber)
     )
   }
 }

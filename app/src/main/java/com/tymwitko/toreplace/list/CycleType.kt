@@ -1,5 +1,7 @@
 package com.tymwitko.toreplace.list
 
+import com.tymwitko.toreplace.R
+
 enum class CycleType {
   DAYS, WEEKS, MONTHS, YEARS
 }
@@ -12,4 +14,11 @@ fun Char.toCycleType() = when (this) {
   'M' -> CycleType.MONTHS
   'Y' -> CycleType.YEARS
   else -> null
+}
+
+fun CycleType.toStringResource() = when (this) {
+  CycleType.DAYS -> R.plurals.day
+  CycleType.WEEKS -> R.plurals.week
+  CycleType.MONTHS -> R.plurals.month
+  CycleType.YEARS -> R.plurals.year
 }

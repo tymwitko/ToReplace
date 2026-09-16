@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="day">
+        <item quantity="one">Día</item>
+        <item quantity="many">Días</item>
+    </plurals>
+    <plurals name="week">
+        <item quantity="one">Semana</item>
+        <item quantity="many">Semanas</item>
+    </plurals>
+    <plurals name="month">
+        <item quantity="one">Mes</item>
+        <item quantity="many">Meses</item>
+    </plurals>
+    <plurals name="year">
+        <item quantity="one">Año</item>
+        <item quantity="many">Años</item>
+    </plurals>
+</resources>
