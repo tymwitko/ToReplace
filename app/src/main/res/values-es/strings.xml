@@ -10,4 +10,7 @@
     <string name="cancel">Anular</string>
     <string name="interval_number">Repetir cada…</string>
     <string name="add_task">Añadir nuevo coro</string>
+    <string name="done">Hecho</string>
+    <string name="reminder_reset">Recordatorio reajuste a %1$s %2$s</string>
+    <string name="due_in">Para hacer en %1$s %2$s</string>
 </resources>

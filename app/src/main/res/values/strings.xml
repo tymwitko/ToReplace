@@ -10,4 +10,7 @@
     <string name="add_task">Add new task</string>
     <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="reminder_reset">Reminder reset to %1$s %2$s</string>
+    <string name="due_in">Due in %1$s %2$s</string>
 </resources>

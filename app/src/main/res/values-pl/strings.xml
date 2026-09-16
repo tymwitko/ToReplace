@@ -10,4 +10,7 @@
     <string name="cancel">Anuluj</string>
     <string name="interval_number">Powtarzaj co…</string>
     <string name="add_task">Dodaj nowe zadanie</string>
+    <string name="done">Zrobione</string>
+    <string name="reminder_reset">Przypomnienie ustawione na za %1$s %2$s</string>
+    <string name="due_in">Do zrobienia za %1$s %2$s</string>
 </resources>
