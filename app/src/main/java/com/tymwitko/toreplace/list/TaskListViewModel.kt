@@ -10,8 +10,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.time.Duration
-import java.time.LocalDate
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
+import kotlinx.datetime.plus
+import kotlinx.datetime.toLocalDateTime
 
 class TaskListViewModel(
   private val fetchTasksUseCase: FetchTasksUseCase,
@@ -31,7 +36,7 @@ class TaskListViewModel(
       when (val result = fetchTasksUseCase()) {
         is Result.Success -> {
           val mapWithDays = result.data.map {
-            it to getDaysLeft(it.startDate, it.interval)
+            it to getDaysLeft(it.lastTimeDone, it.interval)
           }
           uiState.emit(TaskListUiState.Success(mapWithDays))
         }
@@ -46,31 +51,40 @@ class TaskListViewModel(
     }
   }
 
-  fun getDaysLeft(startDate: LocalDate, interval: Interval): Int {
-    val today = LocalDate.now()
+  fun getDaysLeft(lastDoneDate: LocalDate, interval: Interval): Int {
+    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
     return when (interval.cycleType) {
       CycleType.DAYS -> {
-        interval.number - (today.toEpochDay() - startDate.toEpochDay()).mod(interval.number)
+        interval.number - (today.toEpochDays() - lastDoneDate.toEpochDays())
       }
       CycleType.WEEKS -> {
-        interval.number * 7 - (today.toEpochDay() - startDate.toEpochDay()).mod(interval.number * 7)
+        interval.number * 7 - (today.toEpochDays() - lastDoneDate.toEpochDays())
       }
       CycleType.MONTHS -> {
-        val diff = startDate.dayOfMonth - today.dayOfMonth
-        when {
-          diff > 0 -> diff
-          diff < 0 -> today.lengthOfMonth() - today.dayOfMonth + startDate.dayOfMonth
-          else -> today.lengthOfMonth()
-        }
+        lastDoneDate.plus(interval.number.toLong(), DateTimeUnit.MONTH)
+          .daysSince(today)
       }
       CycleType.YEARS -> {
-        val sameDateThisYear = LocalDate.of(today.year, startDate.month, startDate.dayOfMonth)
-        val diff = Duration.between(today, sameDateThisYear).toDays().toInt()
-        if (diff > 0) diff else {
-          val sameDateNextYear = LocalDate.of(today.year + 1, startDate.month, startDate.dayOfMonth)
-          Duration.between(today, sameDateNextYear).toDays().toInt()
-        }
+        lastDoneDate.plus(interval.number.toLong(), DateTimeUnit.YEAR)
+          .daysSince(today)
       }
     }
   }
 }
+
+fun LocalDate.plus(value: Long, unit: DateTimeUnit.TimeBased): LocalDate {
+  val timeZone = TimeZone.currentSystemDefault()
+  return atStartOfDayIn(timeZone)
+    .plus(value, unit)
+    .toLocalDateTime(timeZone)
+    .date
+}
+
+fun LocalDate.daysSince(other: LocalDate): Int {
+  val timeZone = TimeZone.currentSystemDefault()
+  return atStartOfDayIn(timeZone)
+    .minus(other.atStartOfDayIn(timeZone))
+    .inWholeDays
+    .toInt()
+}
+

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.tymwitko.toreplace.list.Interval
 import com.tymwitko.toreplace.list.Task
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 @Entity(tableName = "chore")
 data class ChoreEntry(
@@ -21,14 +21,14 @@ data class ChoreEntry(
   @ColumnInfo(name = "interval")
   var intervalCode: String,
 
-  @ColumnInfo(name = "start_date")
-  var startDate: String
+  @ColumnInfo(name = "last_done")
+  var lastTimeDone: String
 ) {
   constructor(task: Task) : this(
     name = task.name,
     description = task.description,
     intervalCode = task.interval.toCode(),
-    startDate = task.startDate.toString()
+    lastTimeDone = task.lastTimeDone.toString()
   )
 }
 
@@ -37,5 +37,5 @@ fun ChoreEntry.toDomain() = Task(
   name,
   description,
   Interval(intervalCode),
-  LocalDate.parse(startDate)
+  LocalDate.parse(lastTimeDone)
 )

@@ -8,7 +8,7 @@ import com.tymwitko.toreplace.list.Task
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 class NewTaskViewModel(
   private val submitTaskUseCase: SubmitTaskUseCase,

@@ -6,7 +6,7 @@
     <string name="report_error">Reportar el error</string>
     <string name="title">Título</string>
     <string name="description">Descripción</string>
-    <string name="start_date">Fecha inicial</string>
+    <string name="last_done">Última vez que lo hiciste</string>
     <string name="cancel">Anular</string>
     <string name="interval_number">Repetir cada…</string>
     <string name="add_task">Añadir nuevo coro</string>

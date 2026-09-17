@@ -42,8 +42,8 @@ import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.common.ui.clearFocusOnKeyboardDismiss
 import com.tymwitko.toreplace.list.CycleType
 import com.tymwitko.toreplace.newtask.NewTaskViewModel
+import kotlinx.datetime.LocalDate
 import org.koin.androidx.compose.koinViewModel
-import java.time.LocalDate
 
 @Composable
 fun NewTaskScreen(
@@ -86,7 +86,7 @@ fun NewTaskScreen(
     OutlinedTextField(
       value = selectedDate?.toString().orEmpty(),
       onValueChange = { },
-      label = { Text(stringResource(R.string.start_date)) },
+      label = { Text(stringResource(R.string.last_done)) },
       modifier = Modifier
         .fillMaxWidth()
         .pointerInput(selectedDate) {
@@ -179,8 +179,8 @@ fun NewTaskScreen(
           titleFieldState.text.toString(),
           descriptionFieldState.text.toString(),
           numberFieldState.text.toString().toInt(),
-          selectedCycleType ?: CycleType.YEARS, // todo: better handling
-          LocalDate.from(selectedDate)
+          selectedCycleType!!, // todo: better handling
+          selectedDate!!
         )
       }
     ) {

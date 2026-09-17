@@ -10,7 +10,8 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.tymwitko.toreplace.R
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.toKotlinLocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,7 +25,7 @@ fun DatePickerModal(
     onDismissRequest = onDismiss,
     confirmButton = {
       TextButton(onClick = {
-        onDateSelected(datePickerState.getSelectedDate())
+        onDateSelected(datePickerState.getSelectedDate()?.toKotlinLocalDate())
         onDismiss()
       }) {
         Text(stringResource(R.string.ok))
