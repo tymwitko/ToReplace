@@ -6,14 +6,14 @@ import androidx.compose.runtime.Composable
 import com.tymwitko.toreplace.list.Task
 
 @Composable
-fun TaskList(tasks: List<Task>) {
+fun TaskList(tasks: List<Pair<Task, Int>>) {
   LazyColumn {
-    items(tasks, key = { it.name }) {
+    items(tasks, key = { it.first.id }) {
       TaskListItem(
-        it.name,
-        it.interval.number,
-        it.interval.cycleType,
-        it.startDate.dayOfMonth
+        it.first.name,
+        it.first.interval.number,
+        it.first.interval.cycleType,
+        it.second
       )
     }
   }

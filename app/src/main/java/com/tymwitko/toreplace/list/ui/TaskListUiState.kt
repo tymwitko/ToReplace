@@ -6,7 +6,7 @@ sealed interface TaskListUiState {
   object Loading : TaskListUiState
   object EmptyList : TaskListUiState
   data class Success(
-    val list: List<Task>,
+    val list: List<Pair<Task, Int>>,
   ) : TaskListUiState
   data class Error(val message: String) : TaskListUiState
 }
