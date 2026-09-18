@@ -175,13 +175,17 @@ fun NewTaskScreen(
         disabledContentColor = MaterialTheme.colorScheme.onSecondary
       ),
       onClick = {
-        viewModel.submit(
-          titleFieldState.text.toString(),
-          descriptionFieldState.text.toString(),
-          numberFieldState.text.toString().toInt(),
-          selectedCycleType!!, // todo: better handling
-          selectedDate!!
-        )
+        selectedCycleType?.let { cycleType ->
+          selectedDate?.let { lastDoneDate ->
+            viewModel.submit(
+              titleFieldState.text.toString(),
+              descriptionFieldState.text.toString(),
+              numberFieldState.text.toString().toInt(),
+              cycleType,
+              lastDoneDate
+            )
+          }
+        }
       }
     ) {
       Text(stringResource(R.string.ok))
