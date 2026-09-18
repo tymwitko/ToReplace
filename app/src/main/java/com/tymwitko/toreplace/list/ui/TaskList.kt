@@ -9,12 +9,7 @@ import com.tymwitko.toreplace.list.Task
 fun TaskList(tasks: List<Pair<Task, Int>>) {
   LazyColumn {
     items(tasks, key = { it.first.id }) {
-      TaskListItem(
-        it.first.name,
-        it.first.interval.number,
-        it.first.interval.cycleType,
-        it.second
-      )
+      TaskListItem(it.first, it.second)
     }
   }
 }

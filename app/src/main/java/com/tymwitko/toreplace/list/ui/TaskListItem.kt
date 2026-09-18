@@ -19,15 +19,16 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tymwitko.toreplace.R
-import com.tymwitko.toreplace.list.CycleType
+import com.tymwitko.toreplace.list.Task
+import com.tymwitko.toreplace.list.TaskListViewModel
 import com.tymwitko.toreplace.list.toStringResource
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun TaskListItem(
-  taskName: String,
-  cycleLength: Int,
-  cycleType: CycleType,
-  dueInDays: Int
+  task: Task,
+  dueInDays: Int,
+  viewModel: TaskListViewModel = koinViewModel()
 ) {
   val ctx = LocalContext.current
   val res = LocalResources.current
@@ -42,7 +43,7 @@ fun TaskListItem(
   ) {
     Column {
       Text(
-        text = taskName,
+        text = task.name,
         color = MaterialTheme.colorScheme.onBackground
       )
       Text(
@@ -56,12 +57,16 @@ fun TaskListItem(
     }
     Button(
       onClick = {
+        viewModel.resetLastTimeDone(task)
         Toast.makeText(
           ctx,
           res.getString(
             R.string.reminder_reset,
-            cycleLength.toString(),
-            res.getQuantityString(cycleType.toStringResource(), cycleLength)
+            task.interval.number.toString(),
+            res.getQuantityString(
+              task.interval.cycleType.toStringResource(),
+              task.interval.number
+            )
           ),
           Toast.LENGTH_SHORT
         ).show()

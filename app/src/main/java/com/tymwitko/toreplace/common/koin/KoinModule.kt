@@ -5,6 +5,7 @@ import com.tymwitko.toreplace.common.db.ReplaceDao
 import com.tymwitko.toreplace.common.db.ReplaceDatabase
 import com.tymwitko.toreplace.list.FetchTasksUseCase
 import com.tymwitko.toreplace.list.TaskListViewModel
+import com.tymwitko.toreplace.list.UpdateTaskUseCase
 import com.tymwitko.toreplace.list.db.ChoreRepository
 import com.tymwitko.toreplace.newtask.NewTaskViewModel
 import com.tymwitko.toreplace.newtask.SubmitTaskUseCase
@@ -15,7 +16,7 @@ import org.koin.dsl.module
 
 val appModule = module {
   viewModel {
-    TaskListViewModel(get())
+    TaskListViewModel(get(), get())
   }
   single {
     Room.databaseBuilder(
@@ -32,6 +33,7 @@ val appModule = module {
   singleOf(::ChoreRepository)
   singleOf(::FetchTasksUseCase)
   singleOf(::SubmitTaskUseCase)
+  singleOf(::UpdateTaskUseCase)
   viewModel {
     NewTaskViewModel(get())
   }

@@ -25,6 +25,7 @@ data class ChoreEntry(
   var lastTimeDone: String
 ) {
   constructor(task: Task) : this(
+    id = task.id,
     name = task.name,
     description = task.description,
     intervalCode = task.interval.toCode(),

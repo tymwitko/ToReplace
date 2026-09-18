@@ -9,4 +9,8 @@ class ChoreRepository(private val replaceDao: ReplaceDao) {
   suspend fun addChore(chore: ChoreEntry) {
     replaceDao.insert(chore)
   }
+
+  suspend fun updateChore(chore: ChoreEntry) {
+    replaceDao.update(chore)
+  }
 }

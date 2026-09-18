@@ -20,6 +20,7 @@ import kotlinx.datetime.toLocalDateTime
 
 class TaskListViewModel(
   private val fetchTasksUseCase: FetchTasksUseCase,
+  private val updateTaskUseCase: UpdateTaskUseCase,
   private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
@@ -47,6 +48,15 @@ class TaskListViewModel(
               uiState.emit(TaskListUiState.Error(result.error.message))
           }
         }
+      }
+    }
+  }
+
+  fun resetLastTimeDone(task: Task) {
+    viewModelScope.launch(dispatcher) {
+      if (uiState.value is TaskListUiState.Success) {
+        val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+        updateTaskUseCase(task, today)
       }
     }
   }
