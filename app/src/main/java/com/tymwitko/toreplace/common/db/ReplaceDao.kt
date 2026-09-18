@@ -1,6 +1,7 @@
 package com.tymwitko.toreplace.common.db
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -13,6 +14,9 @@ interface ReplaceDao {
 
   @Update
   suspend fun update(entry: ChoreEntry)
+
+  @Delete
+  suspend fun delete(entry: ChoreEntry)
 
   @Query("SELECT * FROM chore WHERE id = :id")
   suspend fun getChoreById(id: Long): ChoreEntry?

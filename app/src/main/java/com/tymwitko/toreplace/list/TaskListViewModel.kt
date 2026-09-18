@@ -21,6 +21,7 @@ import kotlinx.datetime.toLocalDateTime
 class TaskListViewModel(
   private val fetchTasksUseCase: FetchTasksUseCase,
   private val updateTaskUseCase: UpdateTaskUseCase,
+  private val deleteTaskUseCase: DeleteTaskUseCase,
   private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
@@ -78,6 +79,12 @@ class TaskListViewModel(
         lastDoneDate.plus(interval.number.toLong(), DateTimeUnit.YEAR)
           .daysSince(today)
       }
+    }
+  }
+
+  fun deleteTask(task: Task) {
+    viewModelScope.launch(dispatcher) {
+      deleteTaskUseCase(task)
     }
   }
 }

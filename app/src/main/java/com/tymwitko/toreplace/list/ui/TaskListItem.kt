@@ -10,7 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxDefaults
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,48 +37,62 @@ fun TaskListItem(
   val ctx = LocalContext.current
   val res = LocalResources.current
 
-  Row(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(12.dp)
-      .border(width = 1.dp, color = Color.DarkGray, shape = RoundedCornerShape(12.dp))
-      .padding(12.dp),
-    horizontalArrangement = Arrangement.SpaceBetween
-  ) {
-    Column {
-      Text(
-        text = task.name,
-        color = MaterialTheme.colorScheme.onBackground
-      )
-      Text(
-        text = res.getString(
-          R.string.due_in,
-          dueInDays.toString(),
-          res.getQuantityString(R.plurals.day, dueInDays)
-        ),
-        color = MaterialTheme.colorScheme.onBackground
-      )
-    }
-    Button(
-      onClick = {
-        viewModel.resetLastTimeDone(task)
-        Toast.makeText(
-          ctx,
-          res.getString(
-            R.string.reminder_reset,
-            task.interval.number.toString(),
-            res.getQuantityString(
-              task.interval.cycleType.toStringResource(),
-              task.interval.number
-            )
-          ),
-          Toast.LENGTH_SHORT
-        ).show()
-      }
+  val swipeToDismissBoxState = rememberSwipeToDismissBoxState(
+    SwipeToDismissBoxValue.Settled,
+    SwipeToDismissBoxDefaults.positionalThreshold
+  )
+
+  SwipeToDismissBox(
+    state = swipeToDismissBoxState,
+    backgroundContent = {},
+    enableDismissFromEndToStart = true,
+    enableDismissFromStartToEnd = true,
+    onDismiss = {
+      viewModel.deleteTask(task)
+    }) {
+    Row(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)
+        .border(width = 1.dp, color = Color.DarkGray, shape = RoundedCornerShape(12.dp))
+        .padding(12.dp),
+      horizontalArrangement = Arrangement.SpaceBetween
     ) {
-      Text(
-        text = stringResource(R.string.done).uppercase()
-      )
+      Column {
+        Text(
+          text = task.name,
+          color = MaterialTheme.colorScheme.onBackground
+        )
+        Text(
+          text = res.getString(
+            R.string.due_in,
+            dueInDays.toString(),
+            res.getQuantityString(R.plurals.day, dueInDays)
+          ),
+          color = MaterialTheme.colorScheme.onBackground
+        )
+      }
+      Button(
+        onClick = {
+          viewModel.resetLastTimeDone(task)
+          Toast.makeText(
+            ctx,
+            res.getString(
+              R.string.reminder_reset,
+              task.interval.number.toString(),
+              res.getQuantityString(
+                task.interval.cycleType.toStringResource(),
+                task.interval.number
+              )
+            ),
+            Toast.LENGTH_SHORT
+          ).show()
+        }
+      ) {
+        Text(
+          text = stringResource(R.string.done).uppercase()
+        )
+      }
     }
   }
 }

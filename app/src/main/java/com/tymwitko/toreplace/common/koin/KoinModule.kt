@@ -3,6 +3,7 @@ package com.tymwitko.toreplace.common.koin
 import androidx.room.Room
 import com.tymwitko.toreplace.common.db.ReplaceDao
 import com.tymwitko.toreplace.common.db.ReplaceDatabase
+import com.tymwitko.toreplace.list.DeleteTaskUseCase
 import com.tymwitko.toreplace.list.FetchTasksUseCase
 import com.tymwitko.toreplace.list.TaskListViewModel
 import com.tymwitko.toreplace.list.UpdateTaskUseCase
@@ -16,7 +17,7 @@ import org.koin.dsl.module
 
 val appModule = module {
   viewModel {
-    TaskListViewModel(get(), get())
+    TaskListViewModel(get(), get(), get())
   }
   single {
     Room.databaseBuilder(
@@ -34,6 +35,7 @@ val appModule = module {
   singleOf(::FetchTasksUseCase)
   singleOf(::SubmitTaskUseCase)
   singleOf(::UpdateTaskUseCase)
+  singleOf(::DeleteTaskUseCase)
   viewModel {
     NewTaskViewModel(get())
   }
