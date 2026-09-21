@@ -17,7 +17,7 @@ class UpdateTaskUseCase(
         )
       )
       Result.Success(true)
-    } catch (_: Exception) {
-      Result.Failure(TaskListError.Empty)
+    } catch (e: Exception) {
+      Result.Failure(TaskListError.Exception(e.message.orEmpty()))
     }
 }

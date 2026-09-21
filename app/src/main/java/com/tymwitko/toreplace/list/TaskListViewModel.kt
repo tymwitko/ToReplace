@@ -42,6 +42,7 @@ class TaskListViewModel(
           }
           uiState.emit(TaskListUiState.Success(mapWithDays))
         }
+
         is Result.Failure -> {
           when (result.error) {
             TaskListError.Empty -> uiState.emit(TaskListUiState.EmptyList)
@@ -84,7 +85,15 @@ class TaskListViewModel(
 
   fun deleteTask(task: Task) {
     viewModelScope.launch(dispatcher) {
-      deleteTaskUseCase(task)
+      (deleteTaskUseCase(task) as? Result.Success)?.let {
+        uiState.emit(
+          (uiState.value as? TaskListUiState.Success)?.let {
+            it.copy(
+              list = it.list.minus(it.list.first { it.first == task }) // todo
+            )
+          } ?: TaskListUiState.EmptyList
+        )
+      }
     }
   }
 }
