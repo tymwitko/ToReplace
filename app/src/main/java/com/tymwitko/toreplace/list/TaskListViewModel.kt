@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
@@ -86,13 +87,14 @@ class TaskListViewModel(
   fun deleteTask(task: Task) {
     viewModelScope.launch(dispatcher) {
       (deleteTaskUseCase(task) as? Result.Success)?.let {
-        uiState.emit(
-          (uiState.value as? TaskListUiState.Success)?.let {
-            it.copy(
-              list = it.list.minus(it.list.first { it.first == task }) // todo
+        uiState.update {
+          (it as? TaskListUiState.Success)?.let { succ ->
+            val oldList = succ.list
+            succ.copy(
+              list = oldList.filter { it.first != task }
             )
-          } ?: TaskListUiState.EmptyList
-        )
+          } ?: it
+        }
       }
     }
   }
