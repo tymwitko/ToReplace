@@ -23,15 +23,14 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tymwitko.toreplace.R
-import com.tymwitko.toreplace.list.Task
 import com.tymwitko.toreplace.list.TaskListViewModel
+import com.tymwitko.toreplace.list.TaskViewData
 import com.tymwitko.toreplace.list.toStringResource
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun TaskListItem(
-  task: Task,
-  dueInDays: Int,
+  viewData: TaskViewData,
   viewModel: TaskListViewModel = koinViewModel()
 ) {
   val ctx = LocalContext.current
@@ -48,7 +47,7 @@ fun TaskListItem(
     enableDismissFromEndToStart = true,
     enableDismissFromStartToEnd = true,
     onDismiss = {
-      viewModel.deleteTask(task)
+      viewModel.deleteTask(viewData)
     }) {
     Row(
       modifier = Modifier
@@ -60,7 +59,7 @@ fun TaskListItem(
     ) {
       Column {
         Text(
-          text = task.name,
+          text = viewData.task.name,
           color = MaterialTheme.colorScheme.onBackground
         )
         Text(
@@ -74,15 +73,15 @@ fun TaskListItem(
       }
       Button(
         onClick = {
-          viewModel.resetLastTimeDone(task)
+          viewModel.resetLastTimeDone(viewData)
           Toast.makeText(
             ctx,
             res.getString(
               R.string.reminder_reset,
-              task.interval.number.toString(),
+              viewData.interval.number.toString(),
               res.getQuantityString(
-                task.interval.cycleType.toStringResource(),
-                task.interval.number
+                viewData.interval.cycleType.toStringResource(),
+                viewData.interval.number
               )
             ),
             Toast.LENGTH_SHORT

@@ -9,7 +9,7 @@ import com.tymwitko.toreplace.list.TaskViewData
 fun TaskList(tasks: List<TaskViewData>) {
   LazyColumn {
     items(tasks, key = { it.task.id }) {
-      TaskListItem(it.task, it.dueInDays)
+      TaskListItem(it)
     }
   }
 }

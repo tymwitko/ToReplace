@@ -44,23 +44,42 @@ class TaskListViewModel(
           uiState.emit(TaskListUiState.Success(tasksWithDays))
         }
 
-        is Result.Failure -> {
-          when (result.error) {
-            TaskListError.Empty -> uiState.emit(TaskListUiState.EmptyList)
-            is TaskListError.Exception ->
-              uiState.emit(TaskListUiState.Error(result.error.message))
-          }
+        is Result.Failure -> handleError(result.error)
+      }
+    }
+  }
+
+  fun resetLastTimeDone(viewData: TaskViewData) {
+    viewModelScope.launch(dispatcher) {
+      if (uiState.value is TaskListUiState.Success) {
+        val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+        when (val result = updateTaskUseCase(viewData.task, today)) {
+          is Result.Success -> updateOnReset(viewData, today)
+          is Result.Failure -> handleError(result.error)
         }
       }
     }
   }
 
-  fun resetLastTimeDone(task: Task) {
-    viewModelScope.launch(dispatcher) {
-      if (uiState.value is TaskListUiState.Success) {
-        val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-        updateTaskUseCase(task, today)
-      }
+  fun updateOnReset(task: TaskViewData, today: LocalDate) {
+    uiState.update { old ->
+      (old as? TaskListUiState.Success)?.let { succ ->
+        old.copy(
+          list = succ.list.map {
+            if (it == task) task.copy(
+              dueInDays = getDaysLeft(today, task.task.interval)
+            ) else it
+          }
+        )
+      } ?: old
+    }
+  }
+
+  suspend fun handleError(error: TaskListError) {
+    when (error) {
+      TaskListError.Empty -> uiState.emit(TaskListUiState.EmptyList)
+      is TaskListError.Exception ->
+        uiState.emit(TaskListUiState.Error(error.message))
     }
   }
 
