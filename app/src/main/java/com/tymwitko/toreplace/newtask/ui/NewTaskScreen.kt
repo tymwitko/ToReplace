@@ -166,7 +166,6 @@ fun NewTaskScreen(
 
     Button(
       enabled = titleFieldState.text.isNotBlank() &&
-        descriptionFieldState.text.isNotBlank() &&
         numberFieldState.text.isNotBlank() &&
         selectedDate != null &&
         selectedCycleType != null,
