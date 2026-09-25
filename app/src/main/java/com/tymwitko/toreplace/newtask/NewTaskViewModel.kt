@@ -24,7 +24,7 @@ class NewTaskViewModel(
     viewModelScope.launch(dispatcher) {
       submitTaskUseCase(
         Task(
-          1,
+          null,
           title,
           desc,
           Interval(number, cycleType),

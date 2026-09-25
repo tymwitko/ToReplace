@@ -24,13 +24,36 @@ data class ChoreEntry(
   @ColumnInfo(name = "last_done")
   var lastTimeDone: String
 ) {
-  constructor(task: Task) : this(
-    id = task.id,
-    name = task.name,
-    description = task.description,
-    intervalCode = task.interval.toCode(),
-    lastTimeDone = task.lastTimeDone.toString()
+
+  constructor(
+    name: String,
+    description: String,
+    intervalCode: Interval,
+    lastTimeDone: LocalDate
+  ) : this(
+    name = name,
+    description = description,
+    intervalCode = intervalCode.toCode(),
+    lastTimeDone = lastTimeDone.toString()
   )
+
+  companion object {
+    operator fun invoke(task: Task): ChoreEntry =
+      task.id?.let {
+        ChoreEntry(
+          id = task.id,
+          name = task.name,
+          description = task.description,
+          intervalCode = task.interval.toCode(),
+          lastTimeDone = task.lastTimeDone.toString()
+        )
+      } ?: ChoreEntry(
+        name = task.name,
+        description = task.description,
+        intervalCode = task.interval.toCode(),
+        lastTimeDone = task.lastTimeDone.toString()
+      )
+  }
 }
 
 fun ChoreEntry.toDomain() = Task(

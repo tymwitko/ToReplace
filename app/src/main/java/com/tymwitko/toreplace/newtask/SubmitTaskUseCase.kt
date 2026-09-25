@@ -8,7 +8,12 @@ class SubmitTaskUseCase(private val choreRepository: ChoreRepository) {
   suspend operator fun invoke(
     task: Task
   ) {
-    val entry = ChoreEntry(task)
+    val entry = ChoreEntry(
+      task.name,
+      task.description,
+      task.interval,
+      task.lastTimeDone
+    )
     choreRepository.addChore(entry)
   }
 }
