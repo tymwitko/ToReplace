@@ -47,7 +47,7 @@ fun TaskListItem(
     enableDismissFromEndToStart = true,
     enableDismissFromStartToEnd = true,
     onDismiss = {
-      viewModel.deleteTask(viewData)
+      viewModel.deleteTask(viewData.task)
     }) {
     Row(
       modifier = Modifier
@@ -65,8 +65,8 @@ fun TaskListItem(
         Text(
           text = res.getString(
             R.string.due_in,
-            dueInDays.toString(),
-            res.getQuantityString(R.plurals.day, dueInDays)
+            viewData.dueInDays.toString(),
+            res.getQuantityString(R.plurals.day, viewData.dueInDays)
           ),
           color = MaterialTheme.colorScheme.onBackground
         )
@@ -78,10 +78,10 @@ fun TaskListItem(
             ctx,
             res.getString(
               R.string.reminder_reset,
-              viewData.interval.number.toString(),
+              viewData.task.interval.number.toString(),
               res.getQuantityString(
-                viewData.interval.cycleType.toStringResource(),
-                viewData.interval.number
+                viewData.task.interval.cycleType.toStringResource(),
+                viewData.task.interval.number
               )
             ),
             Toast.LENGTH_SHORT
