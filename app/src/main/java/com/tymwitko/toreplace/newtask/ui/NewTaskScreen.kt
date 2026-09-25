@@ -38,7 +38,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.tymwitko.toreplace.R
+import com.tymwitko.toreplace.common.NavigationItem
 import com.tymwitko.toreplace.common.ui.clearFocusOnKeyboardDismiss
 import com.tymwitko.toreplace.list.CycleType
 import com.tymwitko.toreplace.newtask.NewTaskViewModel
@@ -47,6 +49,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun NewTaskScreen(
+  navController: NavHostController,
   viewModel: NewTaskViewModel = koinViewModel()
 ) {
   val titleFieldState: TextFieldState = rememberTextFieldState()
@@ -184,6 +187,7 @@ fun NewTaskScreen(
               cycleType,
               lastDoneDate
             )
+            navController.navigate(NavigationItem.TaskList.route)
           }
         }
       }

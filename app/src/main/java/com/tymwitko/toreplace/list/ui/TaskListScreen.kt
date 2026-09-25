@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +40,11 @@ fun TaskListScreen(
   val layoutDirection = LocalLayoutDirection.current
   val clipBoardManager =
     LocalContext.current.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+  LaunchedEffect(Unit) {
+    viewModel.fetchTasks()
+  }
+
   Box(
     modifier = Modifier.statusBarsPadding().navigationBarsPadding().fillMaxSize()
   ) {

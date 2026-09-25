@@ -35,7 +35,7 @@ fun ReplaceNavHost(
       TaskListScreen(navController)
     }
     composable(NavigationItem.NewTask.route) {
-      NewTaskScreen()
+      NewTaskScreen(navController)
     }
     composable(NavigationItem.Donate.route) {
       LaunchedEffect(Unit) {
