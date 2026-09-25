@@ -3,13 +3,13 @@ package com.tymwitko.toreplace.list.ui
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import com.tymwitko.toreplace.list.Task
+import com.tymwitko.toreplace.list.TaskViewData
 
 @Composable
-fun TaskList(tasks: List<Pair<Task, Int>>) {
+fun TaskList(tasks: List<TaskViewData>) {
   LazyColumn {
-    items(tasks, key = { it.first.id }) {
-      TaskListItem(it.first, it.second)
+    items(tasks, key = { it.task.id }) {
+      TaskListItem(it.task, it.dueInDays)
     }
   }
 }

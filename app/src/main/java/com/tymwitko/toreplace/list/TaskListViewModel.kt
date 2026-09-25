@@ -38,10 +38,10 @@ class TaskListViewModel(
       if (uiState.value !is TaskListUiState.Success) uiState.emit(TaskListUiState.Loading)
       when (val result = fetchTasksUseCase()) {
         is Result.Success -> {
-          val mapWithDays = result.data.map {
-            it to getDaysLeft(it.lastTimeDone, it.interval)
+          val tasksWithDays = result.data.map {
+            TaskViewData(it, getDaysLeft(it.lastTimeDone, it.interval))
           }
-          uiState.emit(TaskListUiState.Success(mapWithDays))
+          uiState.emit(TaskListUiState.Success(tasksWithDays))
         }
 
         is Result.Failure -> {
@@ -91,7 +91,7 @@ class TaskListViewModel(
           (it as? TaskListUiState.Success)?.let { succ ->
             val oldList = succ.list
             succ.copy(
-              list = oldList.filter { it.first != task }
+              list = oldList.filter { it.task != task }
             )
           } ?: it
         }
