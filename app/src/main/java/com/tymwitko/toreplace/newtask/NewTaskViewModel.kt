@@ -2,6 +2,7 @@ package com.tymwitko.toreplace.newtask
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tymwitko.toreplace.common.Result
 import com.tymwitko.toreplace.list.CycleType
 import com.tymwitko.toreplace.list.Interval
 import com.tymwitko.toreplace.list.Task
@@ -19,18 +20,21 @@ class NewTaskViewModel(
     desc: String,
     number: Int,
     cycleType: CycleType,
-    startDate: LocalDate
+    startDate: LocalDate,
+    onSuccess: () -> Unit
   ) {
     viewModelScope.launch(dispatcher) {
-      submitTaskUseCase(
-        Task(
-          null,
-          title,
-          desc,
-          Interval(number, cycleType),
-          startDate
-        )
-      )
+      if (
+        submitTaskUseCase(
+          Task(
+            null,
+            title,
+            desc,
+            Interval(number, cycleType),
+            startDate
+          )
+        ) is Result.Success
+      ) onSuccess()
     }
   }
 }

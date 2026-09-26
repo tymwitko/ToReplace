@@ -143,7 +143,8 @@ fun NewTaskScreen(
           )
         ) {
           Text(
-            text = selectedCycleType?.name ?: "Select interval")
+            text = selectedCycleType?.name ?: "Select interval"
+          )
         }
         DropdownMenu(
           expanded = showDropdown,
@@ -153,7 +154,7 @@ fun NewTaskScreen(
         ) {
           CycleType.entries.forEach {
             IntervalDropDownMenuItem(
-              runCatching { numberFieldState.text.toString().toInt() }.getOrDefault(1) ,
+              runCatching { numberFieldState.text.toString().toInt() }.getOrDefault(1),
               it
             ) {
               selectedCycleType = it
@@ -185,8 +186,9 @@ fun NewTaskScreen(
               numberFieldState.text.toString().toInt(),
               cycleType,
               lastDoneDate
-            )
-            navController.navigate(NavigationItem.TaskList.route)
+            ) {
+              navController.navigate(NavigationItem.TaskList.route)
+            }
           }
         }
       }
