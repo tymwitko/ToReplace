@@ -16,12 +16,14 @@ import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.list.TaskListViewModel
 import com.tymwitko.toreplace.list.TaskViewData
@@ -55,12 +57,22 @@ fun TaskListItem(
         .padding(12.dp)
         .border(width = 1.dp, color = Color.DarkGray, shape = RoundedCornerShape(12.dp))
         .padding(12.dp),
-      horizontalArrangement = Arrangement.SpaceBetween
+      horizontalArrangement = Arrangement.SpaceBetween,
+      verticalAlignment = Alignment.CenterVertically
     ) {
-      Column {
+      Column(
+        modifier = Modifier.padding(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+      ) {
         Text(
           text = viewData.task.name,
-          color = MaterialTheme.colorScheme.onBackground
+          color = MaterialTheme.colorScheme.onBackground,
+          fontSize = 24.sp
+        )
+        Text(
+          text = viewData.task.description,
+          color = MaterialTheme.colorScheme.onBackground,
+          fontSize = 16.sp
         )
         Text(
           text = res.getString(
