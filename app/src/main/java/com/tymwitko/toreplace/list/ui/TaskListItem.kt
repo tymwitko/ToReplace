@@ -54,9 +54,9 @@ fun TaskListItem(
     Row(
       modifier = Modifier
         .fillMaxWidth()
-        .padding(12.dp)
+        .padding(horizontal = 12.dp, vertical = 4.dp)
         .border(width = 1.dp, color = Color.DarkGray, shape = RoundedCornerShape(12.dp))
-        .padding(12.dp),
+        .padding(horizontal = 12.dp, vertical = 8.dp),
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
@@ -67,21 +67,14 @@ fun TaskListItem(
         Text(
           text = viewData.task.name,
           color = MaterialTheme.colorScheme.onBackground,
-          fontSize = 24.sp
+          fontSize = 22.sp
         )
         Text(
           text = viewData.task.description,
           color = MaterialTheme.colorScheme.onBackground,
           fontSize = 16.sp
         )
-        Text(
-          text = res.getString(
-            R.string.due_in,
-            viewData.dueInDays.toString(),
-            res.getQuantityString(R.plurals.day, viewData.dueInDays)
-          ),
-          color = MaterialTheme.colorScheme.onBackground
-        )
+        DueDaysText(viewData.dueInDays)
       }
       Button(
         onClick = {

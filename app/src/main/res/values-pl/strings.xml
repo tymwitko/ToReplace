@@ -13,5 +13,7 @@
     <string name="done">Zrobione</string>
     <string name="reminder_reset">Przypomnienie ustawione na za %1$s %2$s</string>
     <string name="due_in">Do zrobienia za %1$s %2$s</string>
+    <string name="late_by">%1$s %2$s opóźnienia!</string>
     <string name="select_interval">Wybierz interwał</string>
+    <string name="due_today">Do zrobienia dzisiaj!</string>
 </resources>
