@@ -39,6 +39,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.common.NavigationItem
@@ -66,13 +67,16 @@ fun NewTaskScreen(
       .navigationBarsPadding()
       .statusBarsPadding()
       .fillMaxSize()
-      .padding(12.dp),
+      .padding(16.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp)
   ) {
     Text(
       modifier = Modifier
-        .fillMaxWidth(),
-      text = stringResource(R.string.add_task)
+        .fillMaxWidth()
+        .padding(top = 12.dp),
+      text = stringResource(R.string.add_task),
+      fontSize = 24.sp,
+      color = MaterialTheme.colorScheme.onBackground
     )
     TextField(
       modifier = Modifier
