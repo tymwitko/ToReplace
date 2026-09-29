@@ -13,4 +13,5 @@
     <string name="done">Done</string>
     <string name="reminder_reset">Reminder reset to %1$s %2$s</string>
     <string name="due_in">Due in %1$s %2$s</string>
+    <string name="select_interval">Select interval</string>
 </resources>

@@ -34,7 +34,7 @@ class NewTaskViewModel(
             startDate
           )
         ) is Result.Success
-      ) onSuccess()
+      ) viewModelScope.launch(Dispatchers.Main) { onSuccess() }
     }
   }
 }

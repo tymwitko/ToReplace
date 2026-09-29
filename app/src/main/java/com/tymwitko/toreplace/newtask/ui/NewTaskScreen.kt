@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -43,6 +44,7 @@ import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.common.NavigationItem
 import com.tymwitko.toreplace.common.ui.clearFocusOnKeyboardDismiss
 import com.tymwitko.toreplace.list.CycleType
+import com.tymwitko.toreplace.list.toStringResource
 import com.tymwitko.toreplace.newtask.NewTaskViewModel
 import kotlinx.datetime.LocalDate
 import org.koin.androidx.compose.koinViewModel
@@ -143,7 +145,15 @@ fun NewTaskScreen(
           )
         ) {
           Text(
-            text = selectedCycleType?.name ?: "Select interval"
+            text = selectedCycleType?.toStringResource()
+              ?.let {
+                pluralStringResource(
+                  it,
+                  runCatching { numberFieldState.text.toString().toInt() }.getOrDefault(1)
+                )
+              } ?: stringResource(
+              selectedCycleType?.toStringResource() ?: R.string.select_interval
+            )
           )
         }
         DropdownMenu(

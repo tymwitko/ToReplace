@@ -13,4 +13,5 @@
     <string name="done">Hecho</string>
     <string name="reminder_reset">Recordatorio reajuste a %1$s %2$s</string>
     <string name="due_in">Para hacer en %1$s %2$s</string>
+    <string name="select_interval">Seleccionar intervalo</string>
 </resources>
