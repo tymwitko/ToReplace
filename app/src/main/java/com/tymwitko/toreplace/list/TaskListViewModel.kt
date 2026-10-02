@@ -75,6 +75,14 @@ class TaskListViewModel(
     }
   }
 
+  fun updateToDelete(task: Task?) {
+    uiState.update { old ->
+      (old as? TaskListUiState.Success)?.copy(
+        taskToDelete = task
+      ) ?: old
+    }
+  }
+
   suspend fun handleError(error: TaskListError) {
     when (error) {
       TaskListError.Empty -> uiState.emit(TaskListUiState.EmptyList)

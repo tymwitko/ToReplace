@@ -28,6 +28,7 @@ import com.tymwitko.toreplace.common.ui.ErrorScreen
 import com.tymwitko.toreplace.common.ui.PulseAnimation
 import com.tymwitko.toreplace.common.ui.toImageBitmap
 import com.tymwitko.toreplace.list.TaskListViewModel
+import com.tymwitko.toreplace.newtask.ui.ConfirmDeleteDialog
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -46,18 +47,34 @@ fun TaskListScreen(
   }
 
   Box(
-    modifier = Modifier.statusBarsPadding().navigationBarsPadding().fillMaxSize()
+    modifier = Modifier
+      .statusBarsPadding()
+      .navigationBarsPadding()
+      .fillMaxSize()
   ) {
     when (val state = uiState) {
       is TaskListUiState.Success -> {
         TaskList(state.list)
+
+        state.taskToDelete?.let {
+          ConfirmDeleteDialog(
+            onConfirm = {
+              viewModel.deleteTask(it)
+            },
+            {
+              viewModel.updateToDelete(null)
+            }
+          )
+        }
       }
+
       TaskListUiState.EmptyList -> {}
       is TaskListUiState.Error -> {
         ErrorScreen(state.message, viewModel::fetchTasks) {
           clipBoardManager.setPrimaryClip(ClipData.newPlainText("", state.message))
         }
       }
+
       TaskListUiState.Loading -> {
         Box(
           modifier = Modifier.fillMaxSize(),

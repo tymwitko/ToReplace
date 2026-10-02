@@ -16,4 +16,7 @@
     <string name="due_today">Due today!</string>
     <string name="late_by">%1$s %2$s late!</string>
     <string name="select_interval">Select interval</string>
+    <string name="delete">Delete item?</string>
+    <string name="ye">Yes</string>
+    <string name="nah">No</string>
 </resources>

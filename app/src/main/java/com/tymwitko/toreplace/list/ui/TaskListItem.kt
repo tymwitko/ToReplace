@@ -39,18 +39,22 @@ fun TaskListItem(
   val res = LocalResources.current
 
   val swipeToDismissBoxState = rememberSwipeToDismissBoxState(
-    SwipeToDismissBoxValue.Settled,
-    SwipeToDismissBoxDefaults.positionalThreshold
+    initialValue = SwipeToDismissBoxValue.Settled,
+    confirmValueChange = { targetValue ->
+      if (targetValue != SwipeToDismissBoxValue.Settled) {
+        viewModel.updateToDelete(viewData.task)
+      }
+      false
+    },
+    positionalThreshold = SwipeToDismissBoxDefaults.positionalThreshold
   )
 
   SwipeToDismissBox(
     state = swipeToDismissBoxState,
     backgroundContent = {},
     enableDismissFromEndToStart = true,
-    enableDismissFromStartToEnd = true,
-    onDismiss = {
-      viewModel.deleteTask(viewData.task)
-    }) {
+    enableDismissFromStartToEnd = true
+  ) {
     Row(
       modifier = Modifier
         .fillMaxWidth()

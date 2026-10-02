@@ -16,4 +16,7 @@
     <string name="late_by">%1$s %2$s opóźnienia!</string>
     <string name="select_interval">Wybierz interwał</string>
     <string name="due_today">Do zrobienia dzisiaj!</string>
+    <string name="delete">Usunąć wpis?</string>
+    <string name="ye">Tak</string>
+    <string name="nah">Nie</string>
 </resources>
