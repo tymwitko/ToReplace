@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.tymwitko.toreplace.R
+import com.tymwitko.toreplace.common.ui.theme.LocalAppColors
 
 @Composable
 fun DueDaysText(daysLeft: Int) = when {
@@ -21,7 +22,7 @@ fun DueDaysText(daysLeft: Int) = when {
 
   daysLeft == 0 -> Text(
     text = stringResource(R.string.due_today),
-    color = MaterialTheme.colorScheme.error
+    color = LocalAppColors.current.warning
   )
 
   else -> Text(
@@ -30,6 +31,6 @@ fun DueDaysText(daysLeft: Int) = when {
       -daysLeft,
       pluralStringResource(R.plurals.day, -daysLeft).lowercase()
     ),
-    color = MaterialTheme.colorScheme.errorContainer
+    color = MaterialTheme.colorScheme.error
   )
 }
