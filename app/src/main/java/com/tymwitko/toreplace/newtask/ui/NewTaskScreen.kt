@@ -185,12 +185,6 @@ fun NewTaskScreen(
         selectedDate != null &&
         selectedCycleType != null,
       shape = RectangleShape,
-      colors = ButtonColors(
-        containerColor = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary,
-        disabledContainerColor = MaterialTheme.colorScheme.secondary,
-        disabledContentColor = MaterialTheme.colorScheme.onSecondary
-      ),
       onClick = {
         selectedCycleType?.let { cycleType ->
           selectedDate?.let { lastDoneDate ->
