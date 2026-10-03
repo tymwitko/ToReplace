@@ -65,7 +65,7 @@ fun TaskListItem(
       verticalAlignment = Alignment.CenterVertically
     ) {
       Column(
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier.padding(8.dp).weight(1f),
         verticalArrangement = Arrangement.spacedBy(8.dp)
       ) {
         Text(
