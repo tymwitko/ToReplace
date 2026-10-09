@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.list.CycleType
 import com.tymwitko.toreplace.list.Interval
@@ -74,7 +75,9 @@ fun UiSettingsScreen(
           lastTimeDone = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
         ),
         dueInDays = 420
-      )
+      ),
+      fontSize = fontSliderPosition.sp,
+      itemSize = marginSliderPosition.dp
     )
   }
 }

@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tymwitko.toreplace.R
@@ -33,6 +35,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun TaskListItem(
   viewData: TaskViewData,
+  fontSize: TextUnit,
+  itemSize: Dp,
   viewModel: TaskListViewModel = koinViewModel()
 ) {
   val ctx = LocalContext.current
@@ -60,25 +64,30 @@ fun TaskListItem(
         .fillMaxWidth()
         .padding(horizontal = 12.dp, vertical = 4.dp)
         .border(width = 1.dp, color = Color.DarkGray, shape = RoundedCornerShape(12.dp))
-        .padding(horizontal = 12.dp, vertical = 8.dp),
+        .padding(horizontal = 12.dp, vertical = itemSize),
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically
     ) {
       Column(
-        modifier = Modifier.padding(8.dp).weight(1f),
+        modifier = Modifier
+          .padding(8.dp)
+          .weight(1f),
         verticalArrangement = Arrangement.spacedBy(8.dp)
       ) {
         Text(
           text = viewData.task.name,
           color = MaterialTheme.colorScheme.onBackground,
-          fontSize = 22.sp
+          fontSize = (fontSize.value + 6).sp
         )
         Text(
           text = viewData.task.description,
           color = MaterialTheme.colorScheme.onBackground,
-          fontSize = 16.sp
+          fontSize = fontSize
         )
-        DueDaysText(viewData.dueInDays)
+        DueDaysText(
+          viewData.dueInDays,
+          fontSize
+        )
       }
       Button(
         onClick = {
@@ -98,7 +107,8 @@ fun TaskListItem(
         }
       ) {
         Text(
-          text = stringResource(R.string.done).uppercase()
+          text = stringResource(R.string.done).uppercase(),
+          fontSize = (fontSize.value + 6).sp
         )
       }
     }

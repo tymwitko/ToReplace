@@ -22,7 +22,7 @@ import org.koin.dsl.module
 
 val appModule = module {
   viewModel {
-    TaskListViewModel(get(), get(), get())
+    TaskListViewModel(get(), get(), get(), get())
   }
   single {
     Room.databaseBuilder(

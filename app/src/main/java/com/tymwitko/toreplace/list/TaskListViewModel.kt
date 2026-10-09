@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.tymwitko.toreplace.common.Result
 import com.tymwitko.toreplace.common.TaskListError
 import com.tymwitko.toreplace.list.ui.TaskListUiState
+import com.tymwitko.toreplace.settings.SettingsHolder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +24,7 @@ class TaskListViewModel(
   private val fetchTasksUseCase: FetchTasksUseCase,
   private val updateTaskUseCase: UpdateTaskUseCase,
   private val deleteTaskUseCase: DeleteTaskUseCase,
+  private val settingsHolder: SettingsHolder,
   private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
@@ -125,6 +127,10 @@ class TaskListViewModel(
       }
     }
   }
+
+  fun getFontSize() = settingsHolder.getFontSize()
+
+  fun getMarginSize() = settingsHolder.getMarginSize()
 }
 
 fun LocalDate.plus(value: Long, unit: DateTimeUnit.TimeBased): LocalDate {

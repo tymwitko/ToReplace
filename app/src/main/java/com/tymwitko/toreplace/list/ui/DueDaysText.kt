@@ -5,11 +5,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.TextUnit
 import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.common.ui.theme.LocalAppColors
 
 @Composable
-fun DueDaysText(daysLeft: Int) = when {
+fun DueDaysText(daysLeft: Int, fontSize: TextUnit) = when {
   daysLeft > 0 ->
     Text(
       text = stringResource(
@@ -17,12 +18,14 @@ fun DueDaysText(daysLeft: Int) = when {
         daysLeft,
         pluralStringResource(R.plurals.day, daysLeft).lowercase()
       ),
-      color = MaterialTheme.colorScheme.onBackground
+      color = MaterialTheme.colorScheme.onBackground,
+      fontSize = fontSize
     )
 
   daysLeft == 0 -> Text(
     text = stringResource(R.string.due_today),
-    color = LocalAppColors.current.warning
+    color = LocalAppColors.current.warning,
+    fontSize = fontSize
   )
 
   else -> Text(
@@ -31,6 +34,7 @@ fun DueDaysText(daysLeft: Int) = when {
       -daysLeft,
       pluralStringResource(R.plurals.day, -daysLeft).lowercase()
     ),
-    color = MaterialTheme.colorScheme.error
+    color = MaterialTheme.colorScheme.error,
+    fontSize = fontSize
   )
 }

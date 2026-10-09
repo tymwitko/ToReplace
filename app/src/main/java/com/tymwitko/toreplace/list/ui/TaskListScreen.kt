@@ -103,7 +103,11 @@ fun TaskListScreen(
     ) {
       when (val state = uiState) {
         is TaskListUiState.Success -> {
-          TaskList(state.list)
+          TaskList(
+            state.list,
+            viewModel.getFontSize(),
+            viewModel.getMarginSize()
+            )
 
           state.taskToDelete?.let {
             ConfirmDeleteDialog(
