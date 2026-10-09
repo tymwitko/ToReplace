@@ -11,4 +11,10 @@ object Consts {
   const val REPORT_ISSUE_URL = "https://github.com/tymwitko/recents/issues/new?body=**Describe the " +
     "issue**%0A%0A%0A**Expected outcome**%0A%0A%0A**App version**%0A${BuildConfig.VERSION_NAME}" +
     "%0A%0A**Enter your device model and OS version**%0A%0A"
+  const val SHARED_PREFS_KEY = "com.tymwitko.toreplace.UI_PREFS"
+  const val FONT_SIZE_ALIAS = "FONT_SIZE"
+  const val MARGIN_SIZE_ALIAS = "MARGIN_SIZE"
+  const val IS_REVERSED_ORDER_ALIAS = "REVERSED_ORDER"
+  const val DEFAULT_FONT_SIZE = 12
+  const val DEFAULT_MARGIN_SIZE = 16
 }

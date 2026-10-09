@@ -19,4 +19,7 @@
     <string name="delete">Delete item?</string>
     <string name="ye">Yes</string>
     <string name="nah">No</string>
+    <string name="set_font_size">Set text size</string>
+    <string name="set_margin_size">Set tile size</string>
+    <string name="preview">Preview</string>
 </resources>

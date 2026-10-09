@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.tymwitko.toreplace.R
+import com.tymwitko.toreplace.common.NavigationItem
 import com.tymwitko.toreplace.common.Screen
 import com.tymwitko.toreplace.common.ui.ErrorScreen
 import com.tymwitko.toreplace.common.ui.PulseAnimation
@@ -78,7 +79,9 @@ fun TaskListScreen(
         horizontalArrangement = Arrangement.End
       ) {
         IconButton(
-          onClick = {},
+          onClick = {
+            navController.navigate(NavigationItem.UiSettings.route)
+          },
         ) {
           Image(
             painter = painterResource(R.drawable.settings),

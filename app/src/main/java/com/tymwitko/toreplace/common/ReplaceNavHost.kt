@@ -13,6 +13,7 @@ import com.tymwitko.toreplace.common.Consts.DONATION_URL
 import com.tymwitko.toreplace.common.Consts.REPORT_ISSUE_URL
 import com.tymwitko.toreplace.list.ui.TaskListScreen
 import com.tymwitko.toreplace.newtask.ui.NewTaskScreen
+import com.tymwitko.toreplace.settings.ui.UiSettingsScreen
 
 @Composable
 fun ReplaceNavHost(
@@ -47,6 +48,9 @@ fun ReplaceNavHost(
         handleUrl(REPORT_ISSUE_URL)
       }
     }
+    composable(NavigationItem.UiSettings.route) {
+      UiSettingsScreen()
+    }
   }
 }
 
@@ -54,7 +58,8 @@ enum class Screen {
   TASK_LIST,
   NEW_TASK,
   DONATE,
-  ISSUE
+  ISSUE,
+  UI_SETTINGS
 }
 
 sealed class NavigationItem(val route: String) {
@@ -62,4 +67,5 @@ sealed class NavigationItem(val route: String) {
   object NewTask : NavigationItem(Screen.NEW_TASK.name)
   object Donate : NavigationItem(Screen.DONATE.name)
   object ReportIssue : NavigationItem(Screen.ISSUE.name)
+  object UiSettings : NavigationItem(Screen.UI_SETTINGS.name)
 }
