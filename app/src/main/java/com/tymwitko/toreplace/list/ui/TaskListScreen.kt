@@ -80,7 +80,7 @@ fun TaskListScreen(
       ) {
         IconButton(
           onClick = {
-            navController.navigate(NavigationItem.UiSettings.route)
+            navController.navigate(NavigationItem.Settings.route)
           },
         ) {
           Image(

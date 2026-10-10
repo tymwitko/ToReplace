@@ -1,0 +1,63 @@
+package com.tymwitko.toreplace.settings.menu
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+
+@Composable
+fun SettingsMenuItem(
+  text: String,
+  icon: Painter,
+  route: String,
+  navController: NavHostController,
+  fontSize: TextUnit
+) {
+  Row(
+    modifier = Modifier
+      .fillMaxHeight()
+      .padding(4.dp)
+      .border(width = 1.dp, color = Color.DarkGray, shape = RoundedCornerShape(12.dp))
+      .padding(16.dp)
+      .pointerInput(Unit) {
+        detectTapGestures(
+          onTap = { navController.navigate(route) }
+        )
+      },
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    Image(
+      modifier = Modifier
+        .width(24.dp)
+        .height(24.dp),
+      painter = icon,
+      contentDescription = null,
+      colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
+    )
+    Column(
+      modifier = Modifier
+        .padding(16.dp)
+        .weight(1f)
+    ) {
+      Text(text = text, color = MaterialTheme.colorScheme.onBackground, fontSize = fontSize)
+    }
+  }
+}

@@ -13,6 +13,7 @@ import com.tymwitko.toreplace.list.db.ChoreRepository
 import com.tymwitko.toreplace.newtask.NewTaskViewModel
 import com.tymwitko.toreplace.newtask.SubmitTaskUseCase
 import com.tymwitko.toreplace.settings.SettingsHolder
+import com.tymwitko.toreplace.settings.SettingsViewModel
 import com.tymwitko.toreplace.settings.ui.UiSettingsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
@@ -53,4 +54,5 @@ val appModule = module {
       )
     )
   }
+  singleOf(::SettingsViewModel)
 }

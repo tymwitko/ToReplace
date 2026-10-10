@@ -17,4 +17,6 @@ object Consts {
   const val IS_REVERSED_ORDER_ALIAS = "REVERSED_ORDER"
   const val DEFAULT_FONT_SIZE = 12
   const val DEFAULT_MARGIN_SIZE = 16
+  const val LOG_FILE_NAME = "recents_log.txt"
+  const val EXTRACT_LOGCAT_COMMAND = "logcat -d"
 }
