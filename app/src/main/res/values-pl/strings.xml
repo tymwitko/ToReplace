@@ -19,4 +19,11 @@
     <string name="delete">Usunąć wpis?</string>
     <string name="ye">Tak</string>
     <string name="nah">Nie</string>
+    <string name="set_font_size">Ustaw rozmiar fontu</string>
+    <string name="set_margin_size">Ustaw rozmiar elementu listy</string>
+    <string name="preview">Podgląd</string>
+    <string name="setting_item_donate">Wesprzyj</string>
+    <string name="setting_item_report">Zgłoś problem</string>
+    <string name="setting_item_logs">Pobierz logi</string>
+    <string name="setting_item_ui">Ustawienia interfejsu</string>
 </resources>

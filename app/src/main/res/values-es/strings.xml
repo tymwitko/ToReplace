@@ -19,4 +19,11 @@
     <string name="delete">¿Borrar el artículo?</string>
     <string name="ye">Sí</string>
     <string name="nah">No</string>
+    <string name="set_font_size">Cambiar el tamaño de letra</string>
+    <string name="set_margin_size">Cambiar el tamaño de elementos de listas</string>
+    <string name="preview">Vista previa</string>
+    <string name="setting_item_donate">Hacer donación</string>
+    <string name="setting_item_report">Reportar un problema</string>
+    <string name="setting_item_logs">Descargar archivo de log</string>
+    <string name="setting_item_ui">Configuración del UI</string>
 </resources>
