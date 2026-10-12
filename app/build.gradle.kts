@@ -23,8 +23,15 @@ android {
     buildTypes {
         release {
             optimization {
-                enable = false
+                enable = true
             }
+            isDebuggable = false
+            isCrunchPngs = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+        }
+        debug {
+            isDebuggable = true
         }
     }
     compileOptions {
