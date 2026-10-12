@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -92,7 +93,8 @@ fun TaskListScreen(
         ) {
           Image(
             painter = painterResource(R.drawable.settings),
-            contentDescription = null
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
           )
         }
         IconButton(
@@ -103,7 +105,8 @@ fun TaskListScreen(
         ) {
           Image(
             painter = painterResource(R.drawable.sort),
-            contentDescription = null
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
           )
           DropdownMenu(
             expanded = showDropdown,
