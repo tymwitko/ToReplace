@@ -136,7 +136,8 @@ class TaskListViewModel(
     settingsHolder.storeOrder(sortingType)
     uiState.update { old ->
       (old as? TaskListUiState.Success)?.copy(
-        sortingType = sortingType
+        sortingType = sortingType,
+        list = old.list.sortedBy(sortingType)
       ) ?: old
     }
   }
@@ -158,5 +159,12 @@ fun LocalDate.daysSince(other: LocalDate): Int {
     .minus(other.atStartOfDayIn(timeZone))
     .inWholeDays
     .toInt()
+}
+
+fun List<TaskViewData>.sortedBy(sortingType: SortingType) = when (sortingType) {
+  SortingType.NEWEST -> sortedBy { it.task.id }
+  SortingType.OLDEST -> sortedByDescending { it.task.id }
+  SortingType.MOST_URGENT -> sortedBy { it.dueInDays }
+  SortingType.LEAST_URGENT -> sortedByDescending { it.dueInDays }
 }
 
