@@ -6,6 +6,8 @@ import com.tymwitko.toreplace.common.Result
 import com.tymwitko.toreplace.common.TaskListError
 import com.tymwitko.toreplace.list.ui.TaskListUiState
 import com.tymwitko.toreplace.settings.SettingsHolder
+import com.tymwitko.toreplace.stats.DoneInstance
+import com.tymwitko.toreplace.stats.UpdateStatsUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +26,7 @@ class TaskListViewModel(
   private val fetchTasksUseCase: FetchTasksUseCase,
   private val updateTaskUseCase: UpdateTaskUseCase,
   private val deleteTaskUseCase: DeleteTaskUseCase,
+  private val updateStatsUseCase: UpdateStatsUseCase,
   private val settingsHolder: SettingsHolder,
   private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
@@ -56,7 +59,19 @@ class TaskListViewModel(
       if (uiState.value is TaskListUiState.Success) {
         val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
         when (val result = updateTaskUseCase(viewData.task, today)) {
-          is Result.Success -> updateOnReset(viewData, today)
+          is Result.Success -> {
+            updateOnReset(viewData, today)
+            viewData.task.id?.let {
+              updateStatsUseCase(
+                DoneInstance(
+                  null,
+                  today,
+                  it,
+                  viewData.dueInDays.toLong()
+                )
+              )
+            }
+          }
           is Result.Failure -> handleError(result.error)
         }
       }
@@ -115,7 +130,10 @@ class TaskListViewModel(
 
   fun deleteTask(task: Task) {
     viewModelScope.launch(dispatcher) {
-      (deleteTaskUseCase(task) as? Result.Success)?.let {
+      val bothSuccess =
+        deleteTaskUseCase(task) is Result.Success && task.id != null &&
+          updateStatsUseCase.removeTaskStats(task.id) is Result.Success
+      if (bothSuccess) {
         uiState.update {
           (it as? TaskListUiState.Success)?.let { succ ->
             val oldList = succ.list

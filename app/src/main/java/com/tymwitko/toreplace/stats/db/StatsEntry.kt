@@ -19,7 +19,13 @@ data class StatsEntry(
 
   @ColumnInfo(name = "daysLeft")
   val daysLeft: Long
-)
+) {
+  constructor(instance: DoneInstance) : this(
+    whenDone = instance.timeDone.toString(),
+    taskId = instance.taskId,
+    daysLeft = instance.daysLeft
+  )
+}
 
 fun StatsEntry.toDomain() = DoneInstance(
   id,

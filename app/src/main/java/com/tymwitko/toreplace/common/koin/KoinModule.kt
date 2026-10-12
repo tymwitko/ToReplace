@@ -16,6 +16,7 @@ import com.tymwitko.toreplace.newtask.SubmitTaskUseCase
 import com.tymwitko.toreplace.settings.SettingsHolder
 import com.tymwitko.toreplace.settings.SettingsViewModel
 import com.tymwitko.toreplace.settings.ui.UiSettingsViewModel
+import com.tymwitko.toreplace.stats.UpdateStatsUseCase
 import com.tymwitko.toreplace.stats.db.StatsRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
@@ -25,7 +26,7 @@ import org.koin.dsl.module
 
 val appModule = module {
   viewModel {
-    TaskListViewModel(get(), get(), get(), get())
+    TaskListViewModel(get(), get(), get(), get(), get())
   }
   single {
     Room.databaseBuilder(
@@ -49,6 +50,7 @@ val appModule = module {
   singleOf(::SubmitTaskUseCase)
   singleOf(::UpdateTaskUseCase)
   singleOf(::DeleteTaskUseCase)
+  singleOf(::UpdateStatsUseCase)
   viewModel {
     NewTaskViewModel(get())
   }
