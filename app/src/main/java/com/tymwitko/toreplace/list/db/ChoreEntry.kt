@@ -25,18 +25,6 @@ data class ChoreEntry(
   var lastTimeDone: String
 ) {
 
-  constructor(
-    name: String,
-    description: String,
-    intervalCode: Interval,
-    lastTimeDone: LocalDate
-  ) : this(
-    name = name,
-    description = description,
-    intervalCode = intervalCode.toCode(),
-    lastTimeDone = lastTimeDone.toString()
-  )
-
   companion object {
     operator fun invoke(task: Task): ChoreEntry =
       task.id?.let {

@@ -11,10 +11,10 @@ class SubmitTaskUseCase(private val choreRepository: ChoreRepository) {
     task: Task
   ): Result<Task, TaskListError> = try {
     val entry = ChoreEntry(
-      task.name,
-      task.description,
-      task.interval,
-      task.lastTimeDone
+      name = task.name,
+      description = task.description,
+      intervalCode = task.interval.toCode(),
+      lastTimeDone = task.lastTimeDone.toString()
     )
     choreRepository.addChore(entry)
     Result.Success(task)

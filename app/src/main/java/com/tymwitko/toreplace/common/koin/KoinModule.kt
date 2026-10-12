@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.tymwitko.toreplace.common.Consts.SHARED_PREFS_KEY
 import com.tymwitko.toreplace.common.db.ReplaceDao
 import com.tymwitko.toreplace.common.db.ReplaceDatabase
+import com.tymwitko.toreplace.common.db.StatsDao
 import com.tymwitko.toreplace.list.DeleteTaskUseCase
 import com.tymwitko.toreplace.list.FetchTasksUseCase
 import com.tymwitko.toreplace.list.TaskListViewModel
@@ -15,6 +16,7 @@ import com.tymwitko.toreplace.newtask.SubmitTaskUseCase
 import com.tymwitko.toreplace.settings.SettingsHolder
 import com.tymwitko.toreplace.settings.SettingsViewModel
 import com.tymwitko.toreplace.settings.ui.UiSettingsViewModel
+import com.tymwitko.toreplace.stats.db.StatsRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
@@ -38,6 +40,11 @@ val appModule = module {
     db.replaceDao()
   }
   singleOf(::ChoreRepository)
+  single<StatsDao> {
+    val db = get<ReplaceDatabase>()
+    db.statsDao()
+  }
+  singleOf(::StatsRepository)
   singleOf(::FetchTasksUseCase)
   singleOf(::SubmitTaskUseCase)
   singleOf(::UpdateTaskUseCase)
