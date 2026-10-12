@@ -4,11 +4,9 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -130,36 +128,30 @@ fun NewTaskScreen(
         inputTransformation = DigitOnlyInputTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
       )
-      Box(
-        modifier = Modifier
-          .weight(1f)
-          .fillMaxHeight()
+      Button(
+        modifier = Modifier.fillMaxSize().weight(1f),
+        onClick = {
+          showDropdown = !showDropdown
+        },
+        shape = RectangleShape,
+        colors = ButtonColors(
+          containerColor = MaterialTheme.colorScheme.background,
+          contentColor = MaterialTheme.colorScheme.onBackground,
+          disabledContainerColor = MaterialTheme.colorScheme.background,
+          disabledContentColor = MaterialTheme.colorScheme.onBackground
+        )
       ) {
-        Button(
-          modifier = Modifier.fillMaxSize(),
-          onClick = {
-            showDropdown = !showDropdown
-          },
-          shape = RectangleShape,
-          colors = ButtonColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onBackground,
-            disabledContainerColor = MaterialTheme.colorScheme.background,
-            disabledContentColor = MaterialTheme.colorScheme.onBackground
+        Text(
+          text = selectedCycleType?.toStringResource()
+            ?.let {
+              pluralStringResource(
+                it,
+                runCatching { numberFieldState.text.toString().toInt() }.getOrDefault(1)
+              )
+            } ?: stringResource(
+            selectedCycleType?.toStringResource() ?: R.string.select_interval
           )
-        ) {
-          Text(
-            text = selectedCycleType?.toStringResource()
-              ?.let {
-                pluralStringResource(
-                  it,
-                  runCatching { numberFieldState.text.toString().toInt() }.getOrDefault(1)
-                )
-              } ?: stringResource(
-              selectedCycleType?.toStringResource() ?: R.string.select_interval
-            )
-          )
-        }
+        )
         DropdownMenu(
           expanded = showDropdown,
           onDismissRequest = {
