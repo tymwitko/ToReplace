@@ -43,7 +43,7 @@ class TaskListViewModel(
           val tasksWithDays = result.data.map {
             TaskViewData(it, getDaysLeft(it.lastTimeDone, it.interval))
           }
-          uiState.emit(TaskListUiState.Success(tasksWithDays))
+          uiState.emit(TaskListUiState.Success(tasksWithDays, getSorting()))
         }
 
         is Result.Failure -> handleError(result.error)
@@ -131,6 +131,17 @@ class TaskListViewModel(
   fun getFontSize() = settingsHolder.getFontSize()
 
   fun getMarginSize() = settingsHolder.getMarginSize()
+
+  fun setSorting(sortingType: SortingType) {
+    settingsHolder.storeOrder(sortingType)
+    uiState.update { old ->
+      (old as? TaskListUiState.Success)?.copy(
+        sortingType = sortingType
+      ) ?: old
+    }
+  }
+
+  private fun getSorting() = settingsHolder.getOrder()
 }
 
 fun LocalDate.plus(value: Long, unit: DateTimeUnit.TimeBased): LocalDate {

@@ -9,6 +9,7 @@ import com.tymwitko.toreplace.common.Consts.DEFAULT_MARGIN_SIZE
 import com.tymwitko.toreplace.common.Consts.FONT_SIZE_ALIAS
 import com.tymwitko.toreplace.common.Consts.IS_REVERSED_ORDER_ALIAS
 import com.tymwitko.toreplace.common.Consts.MARGIN_SIZE_ALIAS
+import com.tymwitko.toreplace.list.SortingType
 
 class SettingsHolder(
   private val sharedPrefs: SharedPreferences
@@ -25,15 +26,17 @@ class SettingsHolder(
 
   fun getMarginSize() = sharedPrefs.getInt(MARGIN_SIZE_ALIAS, DEFAULT_MARGIN_SIZE).dp
 
-  fun storeOrder(isReversed: Boolean) {
-    saveBoolean(IS_REVERSED_ORDER_ALIAS, isReversed)
+  fun storeOrder(sortingType: SortingType) {
+    saveString(IS_REVERSED_ORDER_ALIAS, sortingType.name)
   }
 
-  fun isOrderReversed() = sharedPrefs.getBoolean(IS_REVERSED_ORDER_ALIAS, false)
+  fun getOrder() =
+    sharedPrefs.getString(IS_REVERSED_ORDER_ALIAS, SortingType.NEWEST.name)
+      ?.let(SortingType::valueOf) ?: SortingType.NEWEST
 
-  private fun saveBoolean(key: String, value: Boolean) {
+  private fun saveString(key: String, value: String) {
     sharedPrefs.edit(commit = true) {
-      putBoolean(key, value)
+      putString(key, value)
     }
   }
 

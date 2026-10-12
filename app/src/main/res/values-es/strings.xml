@@ -26,4 +26,8 @@
     <string name="setting_item_report">Reportar un problema</string>
     <string name="setting_item_logs">Descargar archivo de log</string>
     <string name="setting_item_ui">Configuración del UI</string>
+    <string name="sorting_item_newest">Más nuevo primero</string>
+    <string name="sorting_item_oldest">Más antiguo primero</string>
+    <string name="sorting_item_urgent">Más urgente primero</string>
+    <string name="sorting_item_not_urgent">Menos urgente primero</string>
 </resources>

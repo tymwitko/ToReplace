@@ -18,10 +18,4 @@ class UiSettingsViewModel(
   fun saveMarginSize(size: Float) {
     settingsHolder.storeMarginSize(size.toInt())
   }
-
-  fun toggleOrder(isReversed: Boolean) {
-    settingsHolder.storeOrder(isReversed)
-  }
-
-  fun isOrderReversed() = settingsHolder.isOrderReversed()
 }

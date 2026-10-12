@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,6 +23,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +42,7 @@ import com.tymwitko.toreplace.common.Screen
 import com.tymwitko.toreplace.common.ui.ErrorScreen
 import com.tymwitko.toreplace.common.ui.PulseAnimation
 import com.tymwitko.toreplace.common.ui.toImageBitmap
+import com.tymwitko.toreplace.list.SortingType
 import com.tymwitko.toreplace.list.TaskListViewModel
 import com.tymwitko.toreplace.newtask.ui.ConfirmDeleteDialog
 import org.koin.androidx.compose.koinViewModel
@@ -52,6 +57,7 @@ fun TaskListScreen(
   val layoutDirection = LocalLayoutDirection.current
   val clipBoardManager =
     LocalContext.current.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+  var showDropdown by remember { mutableStateOf(false) }
 
   LaunchedEffect(Unit) {
     viewModel.fetchTasks()
@@ -79,6 +85,7 @@ fun TaskListScreen(
         horizontalArrangement = Arrangement.End
       ) {
         IconButton(
+          modifier = Modifier.padding(8.dp),
           onClick = {
             navController.navigate(NavigationItem.Settings.route)
           },
@@ -89,12 +96,30 @@ fun TaskListScreen(
           )
         }
         IconButton(
-          onClick = {},
+          modifier = Modifier.padding(8.dp),
+          onClick = {
+            showDropdown = !showDropdown
+          },
         ) {
           Image(
             painter = painterResource(R.drawable.sort),
             contentDescription = null
           )
+          DropdownMenu(
+            expanded = showDropdown,
+            onDismissRequest = {
+              showDropdown = false
+            }
+          ) {
+            SortingType.entries.forEach {
+              SortingDropDownMenuItem(
+                it,
+                it == (uiState as? TaskListUiState.Success)?.sortingType
+              ) {
+                viewModel.setSorting(it)
+              }
+            }
+          }
         }
       }
     }
