@@ -107,8 +107,7 @@ fun TaskListItem(
         }
       ) {
         Text(
-          text = stringResource(R.string.done).uppercase(),
-          fontSize = (fontSize.value + 6).sp
+          text = stringResource(R.string.done).uppercase()
         )
       }
     }
