@@ -43,10 +43,11 @@ class TaskInputViewModel(
 
   fun getFullTask(taskId: Long, onResult: (Task) -> Unit) {
     viewModelScope.launch(dispatcher) {
-      if (fetchTasksUseCase.fetchSingleTask(taskId) is Result.Success)
+      (fetchTasksUseCase.fetchSingleTask(taskId) as? Result.Success)?.let {
         viewModelScope.launch(Dispatchers.Main) {
-
+          onResult(it.data)
         }
+      }
     }
   }
 }

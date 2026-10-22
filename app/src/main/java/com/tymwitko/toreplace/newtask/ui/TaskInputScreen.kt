@@ -69,6 +69,13 @@ fun TaskInputScreen(
     taskId?.let {
       viewModel.getFullTask(it) { taskFromDb ->
         task = taskFromDb
+        task?.let {
+          titleFieldState.edit { append(it.name) }
+          descriptionFieldState.edit { append(it.description) }
+          selectedCycleType = it.interval.cycleType
+          numberFieldState.edit { append(it.interval.number.toString()) }
+          selectedDate = it.lastTimeDone
+        }
       }
     }
   }
