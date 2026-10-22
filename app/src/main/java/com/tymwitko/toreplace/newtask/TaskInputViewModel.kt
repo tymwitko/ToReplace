@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tymwitko.toreplace.common.Result
 import com.tymwitko.toreplace.list.CycleType
+import com.tymwitko.toreplace.list.FetchTasksUseCase
 import com.tymwitko.toreplace.list.Interval
 import com.tymwitko.toreplace.list.Task
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,11 +12,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 
-class NewTaskViewModel(
+class TaskInputViewModel(
   private val submitTaskUseCase: SubmitTaskUseCase,
+  private val fetchTasksUseCase: FetchTasksUseCase,
   private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
   fun submit(
+    id: Long?,
     title: String,
     desc: String,
     number: Int,
@@ -27,7 +30,7 @@ class NewTaskViewModel(
       if (
         submitTaskUseCase(
           Task(
-            null,
+            id,
             title,
             desc,
             Interval(number, cycleType),
@@ -35,6 +38,15 @@ class NewTaskViewModel(
           )
         ) is Result.Success
       ) viewModelScope.launch(Dispatchers.Main) { onSuccess() }
+    }
+  }
+
+  fun getFullTask(taskId: Long, onResult: (Task) -> Unit) {
+    viewModelScope.launch(dispatcher) {
+      if (fetchTasksUseCase.fetchSingleTask(taskId) is Result.Success)
+        viewModelScope.launch(Dispatchers.Main) {
+
+        }
     }
   }
 }

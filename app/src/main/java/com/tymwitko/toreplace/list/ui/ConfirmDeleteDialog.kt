@@ -1,4 +1,4 @@
-package com.tymwitko.toreplace.newtask.ui
+package com.tymwitko.toreplace.list.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

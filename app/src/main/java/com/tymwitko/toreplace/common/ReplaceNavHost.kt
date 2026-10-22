@@ -10,14 +10,16 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.core.net.toUri
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.common.Consts.DONATION_URL
 import com.tymwitko.toreplace.common.Consts.LOG_FILE_NAME
 import com.tymwitko.toreplace.common.Consts.REPORT_ISSUE_URL
 import com.tymwitko.toreplace.list.ui.TaskListScreen
-import com.tymwitko.toreplace.newtask.ui.NewTaskScreen
+import com.tymwitko.toreplace.newtask.ui.TaskInputScreen
 import com.tymwitko.toreplace.settings.menu.SettingsMenuScreen
 import com.tymwitko.toreplace.settings.menu.SettingsMenuViewData
 import com.tymwitko.toreplace.settings.ui.UiSettingsScreen
@@ -70,7 +72,7 @@ fun ReplaceNavHost(
       TaskListScreen(navController)
     }
     composable(NavigationItem.NewTask.route) {
-      NewTaskScreen(navController)
+      TaskInputScreen(navController, null)
     }
     composable(NavigationItem.Donate.route) {
       LaunchedEffect(Unit) {
@@ -99,6 +101,20 @@ fun ReplaceNavHost(
       }
       navController.navigate(NavigationItem.Settings.route)
     }
+    composable(
+      route = NavigationItem.EditTask.route,
+      arguments = listOf(
+        navArgument("taskId") {
+          type = NavType.LongType
+        }
+      )
+    ) { backStack ->
+      val taskId = backStack.arguments?.getLong("taskId") ?: return@composable
+      TaskInputScreen(
+        navController = navController,
+        taskId
+      )
+    }
   }
 }
 
@@ -109,7 +125,8 @@ enum class Screen {
   ISSUE,
   UI_SETTINGS,
   SETTINGS,
-  DOWNLOAD_LOGS
+  DOWNLOAD_LOGS,
+  EDIT_TASK
 }
 
 sealed class NavigationItem(val route: String) {
@@ -120,4 +137,5 @@ sealed class NavigationItem(val route: String) {
   object UiSettings : NavigationItem(Screen.UI_SETTINGS.name)
   object Settings : NavigationItem(Screen.SETTINGS.name)
   object DownloadLogs : NavigationItem(Screen.DOWNLOAD_LOGS.name)
+  object EditTask : NavigationItem(Screen.EDIT_TASK.name + "/{taskId}")
 }

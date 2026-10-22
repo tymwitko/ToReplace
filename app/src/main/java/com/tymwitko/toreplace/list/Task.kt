@@ -8,4 +8,12 @@ data class Task(
   val description: String,
   val interval: Interval,
   val lastTimeDone: LocalDate
-)
+) {
+  fun toStringList() = listOf(
+    id?.toString().orEmpty(),
+    name,
+    description,
+    interval.toCode(),
+    lastTimeDone.toString()
+  )
+}

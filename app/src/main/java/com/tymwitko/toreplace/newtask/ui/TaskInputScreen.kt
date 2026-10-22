@@ -24,6 +24,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,15 +44,17 @@ import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.common.NavigationItem
 import com.tymwitko.toreplace.common.ui.clearFocusOnKeyboardDismiss
 import com.tymwitko.toreplace.list.CycleType
+import com.tymwitko.toreplace.list.Task
 import com.tymwitko.toreplace.list.toStringResource
-import com.tymwitko.toreplace.newtask.NewTaskViewModel
+import com.tymwitko.toreplace.newtask.TaskInputViewModel
 import kotlinx.datetime.LocalDate
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NewTaskScreen(
+fun TaskInputScreen(
   navController: NavHostController,
-  viewModel: NewTaskViewModel = koinViewModel()
+  taskId: Long?,
+  viewModel: TaskInputViewModel = koinViewModel()
 ) {
   val titleFieldState: TextFieldState = rememberTextFieldState()
   val descriptionFieldState: TextFieldState = rememberTextFieldState()
@@ -60,6 +63,16 @@ fun NewTaskScreen(
   var showCalendar by remember { mutableStateOf(false) }
   var showDropdown by remember { mutableStateOf(false) }
   var selectedCycleType by remember { mutableStateOf<CycleType?>(null) }
+  var task by remember { mutableStateOf<Task?>(null) }
+
+  LaunchedEffect(Unit) {
+    taskId?.let {
+      viewModel.getFullTask(it) { taskFromDb ->
+        task = taskFromDb
+      }
+    }
+  }
+
   Column(
     modifier = Modifier
       .navigationBarsPadding()
@@ -72,7 +85,9 @@ fun NewTaskScreen(
       modifier = Modifier
         .fillMaxWidth()
         .padding(top = 12.dp),
-      text = stringResource(R.string.add_task),
+      text = stringResource(
+        if (taskId != null) R.string.edit_task else R.string.add_task
+      ),
       fontSize = 24.sp,
       color = MaterialTheme.colorScheme.onBackground
     )
@@ -81,19 +96,22 @@ fun NewTaskScreen(
         .fillMaxWidth()
         .clearFocusOnKeyboardDismiss(),
       state = titleFieldState,
-      label = { Text(stringResource(R.string.title)) }
+      label = { Text(stringResource(R.string.title)) },
+      placeholder = { task?.name?.let { Text(it) } }
     )
     TextField(
       modifier = Modifier
         .fillMaxWidth()
         .clearFocusOnKeyboardDismiss(),
       state = descriptionFieldState,
-      label = { Text(stringResource(R.string.description)) }
+      label = { Text(stringResource(R.string.description)) },
+      placeholder = { task?.description?.let { Text(it) } }
     )
     OutlinedTextField(
       value = selectedDate?.toString().orEmpty(),
       onValueChange = { },
       label = { Text(stringResource(R.string.last_done)) },
+      placeholder = { task?.lastTimeDone?.toString()?.let { Text(it) } },
       modifier = Modifier
         .fillMaxWidth()
         .pointerInput(selectedDate) {
@@ -126,7 +144,8 @@ fun NewTaskScreen(
         state = numberFieldState,
         label = { Text(stringResource(R.string.interval_number)) },
         inputTransformation = DigitOnlyInputTransformation(),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        placeholder = { task?.interval?.number?.toString()?.let { Text(it) } }
       )
       Button(
         modifier = Modifier.fillMaxSize().weight(1f),
@@ -181,6 +200,7 @@ fun NewTaskScreen(
         selectedCycleType?.let { cycleType ->
           selectedDate?.let { lastDoneDate ->
             viewModel.submit(
+              taskId,
               titleFieldState.text.toString(),
               descriptionFieldState.text.toString(),
               numberFieldState.text.toString().toInt(),
