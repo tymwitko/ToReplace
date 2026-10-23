@@ -45,7 +45,6 @@ import com.tymwitko.toreplace.common.ui.PulseAnimation
 import com.tymwitko.toreplace.common.ui.toImageBitmap
 import com.tymwitko.toreplace.list.SortingType
 import com.tymwitko.toreplace.list.TaskListViewModel
-import com.tymwitko.toreplace.newtask.ui.ConfirmDeleteDialog
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -135,7 +134,9 @@ fun TaskListScreen(
             state.list,
             viewModel.getFontSize(),
             viewModel.getMarginSize()
-            )
+            ) {
+            navController.navigate("${Screen.EDIT_TASK}/$it")
+          }
 
           state.taskToDelete?.let {
             ConfirmDeleteDialog(

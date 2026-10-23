@@ -77,7 +77,8 @@ fun UiSettingsScreen(
         dueInDays = 420
       ),
       fontSize = fontSliderPosition.sp,
-      itemSize = marginSliderPosition.dp
+      itemSize = marginSliderPosition.dp,
+      {}
     )
   }
 }

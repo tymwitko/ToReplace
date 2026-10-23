@@ -10,13 +10,12 @@ class SubmitTaskUseCase(private val choreRepository: ChoreRepository) {
   suspend operator fun invoke(
     task: Task
   ): Result<Task, TaskListError> = try {
-    val entry = ChoreEntry(
-      name = task.name,
-      description = task.description,
-      intervalCode = task.interval.toCode(),
-      lastTimeDone = task.lastTimeDone.toString()
-    )
-    choreRepository.addChore(entry)
+    val entry = ChoreEntry(task)
+    task.id?.let {
+      choreRepository.updateChore(entry)
+    } ?: run {
+      choreRepository.addChore(entry)
+    }
     Result.Success(task)
   } catch (e: Exception) {
     Result.Failure(TaskListError.Exception(e.stackTraceToString()))

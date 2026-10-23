@@ -17,4 +17,6 @@ class ChoreRepository(private val replaceDao: ReplaceDao) {
   suspend fun deleteChore(chore: ChoreEntry) {
     replaceDao.delete(chore)
   }
+
+  suspend fun fetchSingleTask(taskId: Long) = replaceDao.getChoreById(taskId)
 }

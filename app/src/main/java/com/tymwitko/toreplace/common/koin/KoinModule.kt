@@ -11,7 +11,7 @@ import com.tymwitko.toreplace.list.FetchTasksUseCase
 import com.tymwitko.toreplace.list.TaskListViewModel
 import com.tymwitko.toreplace.list.UpdateTaskUseCase
 import com.tymwitko.toreplace.list.db.ChoreRepository
-import com.tymwitko.toreplace.newtask.NewTaskViewModel
+import com.tymwitko.toreplace.newtask.TaskInputViewModel
 import com.tymwitko.toreplace.newtask.SubmitTaskUseCase
 import com.tymwitko.toreplace.settings.SettingsHolder
 import com.tymwitko.toreplace.settings.SettingsViewModel
@@ -52,7 +52,7 @@ val appModule = module {
   singleOf(::DeleteTaskUseCase)
   singleOf(::UpdateStatsUseCase)
   viewModel {
-    NewTaskViewModel(get())
+    TaskInputViewModel(get(), get())
   }
   viewModelOf(::UiSettingsViewModel)
   single {

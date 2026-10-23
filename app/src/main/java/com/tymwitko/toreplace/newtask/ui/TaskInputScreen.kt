@@ -24,6 +24,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,14 +45,15 @@ import com.tymwitko.toreplace.common.NavigationItem
 import com.tymwitko.toreplace.common.ui.clearFocusOnKeyboardDismiss
 import com.tymwitko.toreplace.list.CycleType
 import com.tymwitko.toreplace.list.toStringResource
-import com.tymwitko.toreplace.newtask.NewTaskViewModel
+import com.tymwitko.toreplace.newtask.TaskInputViewModel
 import kotlinx.datetime.LocalDate
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NewTaskScreen(
+fun TaskInputScreen(
   navController: NavHostController,
-  viewModel: NewTaskViewModel = koinViewModel()
+  taskId: Long?,
+  viewModel: TaskInputViewModel = koinViewModel()
 ) {
   val titleFieldState: TextFieldState = rememberTextFieldState()
   val descriptionFieldState: TextFieldState = rememberTextFieldState()
@@ -60,6 +62,19 @@ fun NewTaskScreen(
   var showCalendar by remember { mutableStateOf(false) }
   var showDropdown by remember { mutableStateOf(false) }
   var selectedCycleType by remember { mutableStateOf<CycleType?>(null) }
+
+  LaunchedEffect(Unit) {
+    taskId?.let {
+      viewModel.getFullTask(it) { task ->
+        titleFieldState.edit { append(task.name) }
+        descriptionFieldState.edit { append(task.description) }
+        selectedCycleType = task.interval.cycleType
+        numberFieldState.edit { append(task.interval.number.toString()) }
+        selectedDate = task.lastTimeDone
+      }
+    }
+  }
+
   Column(
     modifier = Modifier
       .navigationBarsPadding()
@@ -72,7 +87,9 @@ fun NewTaskScreen(
       modifier = Modifier
         .fillMaxWidth()
         .padding(top = 12.dp),
-      text = stringResource(R.string.add_task),
+      text = stringResource(
+        if (taskId != null) R.string.edit_task else R.string.add_task
+      ),
       fontSize = 24.sp,
       color = MaterialTheme.colorScheme.onBackground
     )
@@ -181,6 +198,7 @@ fun NewTaskScreen(
         selectedCycleType?.let { cycleType ->
           selectedDate?.let { lastDoneDate ->
             viewModel.submit(
+              taskId,
               titleFieldState.text.toString(),
               descriptionFieldState.text.toString(),
               numberFieldState.text.toString().toInt(),

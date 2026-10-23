@@ -8,6 +8,7 @@
     <string name="last_done">Last time you did it</string>
     <string name="interval_number">Repeat every…</string>
     <string name="add_task">Add new task</string>
+    <string name="edit_task">Edit existing task</string>
     <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>

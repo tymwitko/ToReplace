@@ -11,11 +11,12 @@ import com.tymwitko.toreplace.list.TaskViewData
 fun TaskList(
   tasks: List<TaskViewData>,
   fontSize: TextUnit,
-  itemSize: Dp
+  itemSize: Dp,
+  navigateToEdit: (Long) -> Unit
 ) {
   LazyColumn {
     items(tasks, key = { it.task.id to it.task.name }) {
-      TaskListItem(it, fontSize, itemSize)
+      TaskListItem(it, fontSize, itemSize, navigateToEdit)
     }
   }
 }
