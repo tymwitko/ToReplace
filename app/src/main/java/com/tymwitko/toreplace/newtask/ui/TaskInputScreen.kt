@@ -44,7 +44,6 @@ import com.tymwitko.toreplace.R
 import com.tymwitko.toreplace.common.NavigationItem
 import com.tymwitko.toreplace.common.ui.clearFocusOnKeyboardDismiss
 import com.tymwitko.toreplace.list.CycleType
-import com.tymwitko.toreplace.list.Task
 import com.tymwitko.toreplace.list.toStringResource
 import com.tymwitko.toreplace.newtask.TaskInputViewModel
 import kotlinx.datetime.LocalDate
@@ -63,19 +62,15 @@ fun TaskInputScreen(
   var showCalendar by remember { mutableStateOf(false) }
   var showDropdown by remember { mutableStateOf(false) }
   var selectedCycleType by remember { mutableStateOf<CycleType?>(null) }
-  var task by remember { mutableStateOf<Task?>(null) }
 
   LaunchedEffect(Unit) {
     taskId?.let {
-      viewModel.getFullTask(it) { taskFromDb ->
-        task = taskFromDb
-        task?.let {
-          titleFieldState.edit { append(it.name) }
-          descriptionFieldState.edit { append(it.description) }
-          selectedCycleType = it.interval.cycleType
-          numberFieldState.edit { append(it.interval.number.toString()) }
-          selectedDate = it.lastTimeDone
-        }
+      viewModel.getFullTask(it) { task ->
+        titleFieldState.edit { append(task.name) }
+        descriptionFieldState.edit { append(task.description) }
+        selectedCycleType = task.interval.cycleType
+        numberFieldState.edit { append(task.interval.number.toString()) }
+        selectedDate = task.lastTimeDone
       }
     }
   }
@@ -103,22 +98,19 @@ fun TaskInputScreen(
         .fillMaxWidth()
         .clearFocusOnKeyboardDismiss(),
       state = titleFieldState,
-      label = { Text(stringResource(R.string.title)) },
-      placeholder = { task?.name?.let { Text(it) } }
+      label = { Text(stringResource(R.string.title)) }
     )
     TextField(
       modifier = Modifier
         .fillMaxWidth()
         .clearFocusOnKeyboardDismiss(),
       state = descriptionFieldState,
-      label = { Text(stringResource(R.string.description)) },
-      placeholder = { task?.description?.let { Text(it) } }
+      label = { Text(stringResource(R.string.description)) }
     )
     OutlinedTextField(
       value = selectedDate?.toString().orEmpty(),
       onValueChange = { },
       label = { Text(stringResource(R.string.last_done)) },
-      placeholder = { task?.lastTimeDone?.toString()?.let { Text(it) } },
       modifier = Modifier
         .fillMaxWidth()
         .pointerInput(selectedDate) {
@@ -151,8 +143,7 @@ fun TaskInputScreen(
         state = numberFieldState,
         label = { Text(stringResource(R.string.interval_number)) },
         inputTransformation = DigitOnlyInputTransformation(),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        placeholder = { task?.interval?.number?.toString()?.let { Text(it) } }
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
       )
       Button(
         modifier = Modifier.fillMaxSize().weight(1f),
