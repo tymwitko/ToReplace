@@ -23,7 +23,7 @@ import com.tymwitko.toreplace.list.Interval
 import com.tymwitko.toreplace.list.Task
 import com.tymwitko.toreplace.list.TaskViewData
 import com.tymwitko.toreplace.list.ui.TaskListItem
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.koin.androidx.compose.koinViewModel

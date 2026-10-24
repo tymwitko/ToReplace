@@ -9,10 +9,13 @@ kotlin = "2.4.10"
 composeBom = "2026.06.01"
 koinCore = "4.2.2"
 ksp = "2.3.6"
-roomCompiler = "2.8.4"
+roomCompiler = "2.8.5"
 navigationRuntimeAndroid = "2.9.8"
 material = "1.14.0"
-datetime = "0.6.0"
+datetime = "0.8.0"
+mockk = "1.14.11"
+coroutines-test = "1.11.0"
+arch-testing = "2.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +38,9 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomCompiler" }
 androidx-navigation-runtime-android = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationRuntimeAndroid" }
 datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
+io-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "arch-testing" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

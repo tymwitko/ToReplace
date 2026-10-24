@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tymwitko.toreplace.common.Result
 import com.tymwitko.toreplace.common.TaskListError
+import com.tymwitko.toreplace.common.daysSince
 import com.tymwitko.toreplace.list.ui.TaskListUiState
 import com.tymwitko.toreplace.settings.SettingsHolder
 import com.tymwitko.toreplace.stats.DoneInstance
@@ -14,13 +15,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 
 class TaskListViewModel(
   private val fetchTasksUseCase: FetchTasksUseCase,
@@ -112,10 +112,10 @@ class TaskListViewModel(
     val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
     return when (interval.cycleType) {
       CycleType.DAYS -> {
-        interval.number - (today.toEpochDays() - lastDoneDate.toEpochDays())
+        interval.number - (today.toEpochDays() - lastDoneDate.toEpochDays()).toInt()
       }
       CycleType.WEEKS -> {
-        interval.number * 7 - (today.toEpochDays() - lastDoneDate.toEpochDays())
+        interval.number * 7 - (today.toEpochDays() - lastDoneDate.toEpochDays()).toInt()
       }
       CycleType.MONTHS -> {
         lastDoneDate.plus(interval.number.toLong(), DateTimeUnit.MONTH)
@@ -162,27 +162,3 @@ class TaskListViewModel(
 
   private fun getSorting() = settingsHolder.getOrder()
 }
-
-fun LocalDate.plus(value: Long, unit: DateTimeUnit.TimeBased): LocalDate {
-  val timeZone = TimeZone.currentSystemDefault()
-  return atStartOfDayIn(timeZone)
-    .plus(value, unit)
-    .toLocalDateTime(timeZone)
-    .date
-}
-
-fun LocalDate.daysSince(other: LocalDate): Int {
-  val timeZone = TimeZone.currentSystemDefault()
-  return atStartOfDayIn(timeZone)
-    .minus(other.atStartOfDayIn(timeZone))
-    .inWholeDays
-    .toInt()
-}
-
-fun List<TaskViewData>.sortedBy(sortingType: SortingType) = when (sortingType) {
-  SortingType.NEWEST -> sortedBy { it.task.id }
-  SortingType.OLDEST -> sortedByDescending { it.task.id }
-  SortingType.MOST_URGENT -> sortedBy { it.dueInDays }
-  SortingType.LEAST_URGENT -> sortedByDescending { it.dueInDays }
-}
-
