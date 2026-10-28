@@ -7,6 +7,7 @@ import com.tymwitko.toreplace.list.FetchTasksUseCase
 import com.tymwitko.toreplace.list.Interval
 import com.tymwitko.toreplace.list.Task
 import com.tymwitko.toreplace.list.TaskListViewModel
+import com.tymwitko.toreplace.list.TaskViewData
 import com.tymwitko.toreplace.list.UpdateTaskUseCase
 import com.tymwitko.toreplace.list.db.ChoreEntry
 import com.tymwitko.toreplace.list.db.ChoreRepository
@@ -74,6 +75,23 @@ class TaskListUnitTest {
       assert(
         (viewModel.uiState.value as? TaskListUiState.Success)?.list
           ?.map { it.dueInDays } == listOf(daysLeft)
+      )
+    }
+  }
+
+  @Test
+  fun resettingTimeSetsToday() {
+    runTest {
+      val viewModel = getViewModel(testScheduler)
+      val daysLeft =
+        stairsTask.interval.number * 7 - (today.toEpochDays() - stairsTask.lastTimeDone.toEpochDays()).toInt()
+      viewModel.fetchTasks()
+      advanceUntilIdle()
+      viewModel.updateOnReset(TaskViewData(stairsTask, daysLeft), today)
+      advanceUntilIdle()
+      assert(
+        (viewModel.uiState.value as? TaskListUiState.Success)?.list
+          ?.map { it.dueInDays } == listOf(7 * stairsTask.interval.number)
       )
     }
   }
