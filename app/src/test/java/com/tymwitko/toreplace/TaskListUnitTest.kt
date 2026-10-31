@@ -96,6 +96,50 @@ class TaskListUnitTest {
     }
   }
 
+  @Test
+  fun calculatingDaysLeftWorksForDays() {
+    runTest {
+      val lastDone = LocalDate.parse("2026-03-21")
+      val interval = Interval(420, CycleType.DAYS)
+      assert(
+        getViewModel(testScheduler).getDaysLeft(lastDone, interval) == 196
+      )
+    }
+  }
+
+  @Test
+  fun calculatingDaysLeftWorksForWeeks() {
+    runTest {
+      val lastDone = LocalDate.parse("2026-03-21")
+      val interval = Interval(60, CycleType.WEEKS)
+      assert(
+        getViewModel(testScheduler).getDaysLeft(lastDone, interval) == 196
+      )
+    }
+  }
+
+  @Test
+  fun calculatingDaysLeftWorksForMonths() {
+    runTest {
+      val lastDone = LocalDate.parse("2026-03-21")
+      val interval = Interval(6, CycleType.MONTHS)
+      assert(
+        getViewModel(testScheduler).getDaysLeft(lastDone, interval) == -40
+      )
+    }
+  }
+
+  @Test
+  fun calculatingDaysLeftWorksForYears() {
+    runTest {
+      val lastDone = LocalDate.parse("2026-03-21")
+      val interval = Interval(2, CycleType.YEARS)
+      assert(
+        getViewModel(testScheduler).getDaysLeft(lastDone, interval) == 507
+      )
+    }
+  }
+
   private fun getViewModel(testScheduler: TestCoroutineScheduler) = TaskListViewModel(
     FetchTasksUseCase(choreRepo),
     UpdateTaskUseCase(choreRepo),
